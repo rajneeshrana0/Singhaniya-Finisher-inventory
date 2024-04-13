@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -14,8 +14,22 @@ const Dropdown = () => {
   const [meter, setMeter] = useState("");
   const [roll, setRoll] = useState("");
   const [lotNumber, setLotNumber] = useState("");
+  const [submittedData, setSubmittedData] = useState([]);
 
   const options = ["Rajneesh Rana", "Liza Ahuja", "Nitish Kumar"];
+
+   const fetchSubmittedData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/product/all");
+      setSubmittedData(response.data);
+    } catch (error) {
+      console.error("Error fetching submitted data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubmittedData();
+  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -84,6 +98,9 @@ const Dropdown = () => {
     
     
   };
+
+  const dataToShow = submittedData.filter(dataItem => dataItem.selectedOption !== selectedOption);
+
 
   return (
     <div className="flex flex-col items-center">
@@ -261,7 +278,33 @@ const Dropdown = () => {
           </div>
         )}
       </div>
+      {/* Submitted data table */}
+      <div className="mt-12 w-full ">
+        <h2 className="text-lg font-semibold mb-4"> Account Stock IN Submitted Data</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+            <thead className="bg-blue-800 text-white">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Party Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Quality</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Kg</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Meter</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Roll</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {submittedData.map((dataItem, index) => (
+                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                  <td className="px-6 py-4 whitespace-nowrap">{dataItem.selectedOption}</td>
+                  {/* Add cells for other fields */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+  
   );
 };
 
