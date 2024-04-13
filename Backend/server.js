@@ -7,19 +7,56 @@ const salesRoute = require("./router/sales");
 const cors = require("cors");
 const User = require("./models/users");
 const Product = require("./models/Product");
-
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = 4000;
+app.use(cookieParser());
+const secretKey = "check";
 main();
 app.use(express.json());
-app.use(cors());
+
+const corsOptions = {
+  origin: 'http://localhost:3000', // Replace with your frontend origin
+  credentials: true, // Allow cookies to be sent with the request
+};
+app.use(cors(corsOptions));
+
+function authenticateUser(req, res, next) {
+  let token = req.cookies.token;
+
+  // Check if token is present in cookies
+  if (!token) {
+    // If not present in cookies, check headers
+    token = req.headers.authorization;
+
+    // If token is present in headers, extract it
+    if (token && token.startsWith('Bearer ')) {
+      // Remove 'Bearer ' from token string
+      token = token.slice(7);
+    } else {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  }
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Token expired or invalid" });
+    }
+
+    req.user = decoded;
+    next();
+  });
+}
+
+
+
+// Products API
+app.use("/api/product", authenticateUser, productRoute);
 
 // Store API
 app.use("/api/store", storeRoute);
-
-// Products API
-app.use("/api/product", productRoute);
 
 // Purchase API
 app.use("/api/purchase", purchaseRoute);
@@ -39,17 +76,19 @@ app.post("/api/login", async (req, res) => {
     });
     console.log("USER: ", user);
     if (user) {
-      res.send(user);
+      const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "1h" });
+      res.cookie("token", token, { httpOnly: true, sameSite: "strict", secure: true });
+      res.json({ message: "Login successful" });
       userAuthCheck = user;
     } else {
       res.status(401).send("Invalid Credentials");
-      userAuthCheck = null;
     }
   } catch (error) {
     console.log(error);
     res.send(error);
   }
 });
+
 
 // Getting User Details of login user
 app.get("/api/login", (req, res) => {
@@ -87,5 +126,5 @@ app.get("/testget", async (req,res)=>{
 
 // Here we are listening to the server
 app.listen(PORT, () => {
-  console.log("I am live again");
+  console.log("Server is running on port", PORT);
 });

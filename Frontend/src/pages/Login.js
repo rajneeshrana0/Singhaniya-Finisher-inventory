@@ -36,26 +36,40 @@ function Login() {
   };
 
   const loginUser = (e) => {
-    // Cannot send empty data
+    // Prevent the form from submitting normally
+    e.preventDefault();
+  
+    // Check if form fields are empty
     if (form.email === "" || form.password === "") {
-      alert("To login user, enter details to proceed...");
-    } else {
-      fetch("http://localhost:4000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(form),
-      })
-        .then((result) => {
-          console.log("User login", result);
-        })
-        .catch((error) => {
-          console.log("Something went wrong ", error);
-        });
+      alert("Please enter both email and password to login.");
+      return;
     }
-    authCheck();
+  
+    // Make a POST request to the login API endpoint
+    fetch("http://localhost:4000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(form),
+      credentials: "include", // Include cookies in the request
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Login failed.");
+        }
+        // If login is successful, redirect to the home page or perform further actions
+        // You can handle this part based on your application's requirements
+        console.log("User logged in successfully.");
+        // Redirect to home page or perform further actions
+      })
+      .catch((error) => {
+        console.error("Login error:", error.message);
+        alert("Login failed. Please try again.");
+      });
+      authCheck();
   };
+  
 
 
   const handleSubmit = (e) => {

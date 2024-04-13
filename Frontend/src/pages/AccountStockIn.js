@@ -1,103 +1,263 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
 
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [challanNumber, setChallanNumber] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [kg, setKg] = useState("");
+  const [meter, setMeter] = useState("");
+  const [roll, setRoll] = useState("");
+  const [lotNumber, setLotNumber] = useState("");
+
+  const options = ["Rajneesh Rana", "Liza Ahuja", "Nitish Kumar"];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
-    <div className="relative">
-      <button
-        id="dropdownSearchButton"
-        data-dropdown-toggle="dropdownSearch"
-        data-dropdown-placement="bottom"
-        className="text-white text-center w-[240px] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="button"
-        onClick={toggleDropdown}
-      >
-       Select Party Name{' '}
-        <svg
-          className={`w-2.5 h-2.5 ms-3 transition-transform ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </button>
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
 
-      {isOpen && (
-        <div
-          id="dropdownSearch"
-          className="z-10 absolute top-full mt-1 bg-white rounded-lg shadow w-60 dark:bg-gray-700"
-        >
-          <div className="p-3">
-            <label htmlFor="input-group-search" className="sr-only">
-              Search
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="text"
-                id="input-group-search"
-                className="block  w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-               
-              />
-            </div>
+  const generateLotNumber = () => {
+    const months = [
+      "JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+      "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+    ];
+
+    const currentDate = new Date();
+    const currentMonth = months[currentDate.getMonth()]; // Get current month
+
+    // Get the last generated lot number from the state
+    const lastGeneratedLotNumber = lotNumber.split(" ");
+    let lastNumber = 0;
+
+    // If a lot number was generated previously, extract the number part
+    if (lastGeneratedLotNumber.length === 2) {
+      lastNumber = parseInt(lastGeneratedLotNumber[1]);
+    }
+
+    // Increment the last generated number
+    const newLotNumber = `${currentMonth} ${lastNumber + 1}`;
+
+    // Update the state with the new lot number
+    setLotNumber(newLotNumber);
+
+    // Print the generated lot number in the console
+    console.log("Generated Lot Number:", newLotNumber);
+  };
+
+  const handleSubmit = async () => {
+    // Call the generateLotNumber function to generate the lot number
+    generateLotNumber();
+
+    
+
+    try {
+      // Send the form data to the API
+      const response = await axios.post(
+        "http://localhost:4000/api/product/add",
+        {
+          selectedOption ,
+          challanNumber,
+          quantity,
+          kg,
+          meter,
+          roll,
+          lotNumber
+        },
+      );
+    
+      console.log("Data saved successfully:", response.data);
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+    
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <h1 className="text-5xl font-bold text-center text-gray-800 shadow-lg bg-yellow-400 rounded-md p-6 hover:scale-105 transition-transform duration-300 w-full">
+        Account Stock In
+      </h1>
+      <div className="form-data-start w-full max-w-md mt-6">
+        <div className="relative inline-block text-left w-full mb-4">
+          <div>
+            <button
+              type="button"
+              className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-50"
+              onClick={toggleDropdown}
+            >
+              <span className="text-lg font-bold">Party Name</span>
+              <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
+            </button>
           </div>
-          <ul
-            className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownSearchButton"
-          >
-            <li>
-              <div className="flex items-center ps-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                <input
-                  id="checkbox-item-11"
-                  type="checkbox"
-                  value=""
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                />
-                <label
-                  htmlFor="checkbox-item-11"
-                  className="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+          <Transition appear show={isOpen} as={Fragment}>
+            <Dialog
+              as="div"
+              className="fixed inset-0 z-50 overflow-y-auto"
+              onClose={() => setIsOpen(false)}
+            >
+              <div className="min-h-screen px-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
                 >
-                  Bonnie Green
-                </label>
+                  <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+                </Transition.Child>
+                <span className="inline-block h-screen align-middle">&#8203;</span>
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      Select Party Name
+                    </Dialog.Title>
+                    <div className="mt-4">
+                      <div className="relative">
+                        <input
+                          type="text"
+                          className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      {options
+                        .filter((option) =>
+                          option.toLowerCase().includes(searchTerm.toLowerCase())
+                        )
+                        .map((option, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleOptionClick(option)}
+                            className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
+                          >
+                            {option}
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                </Transition.Child>
               </div>
-            </li>
-            {/* Add more list items here if needed */}
-          </ul>
-       
+            </Dialog>
+          </Transition>
         </div>
-      )}
-      
+        {/* Display selected option */}
+        {selectedOption && (
+          <div className="mt-4 text-center">
+            <p className="text-gray-700">Selected Party Name: {selectedOption}</p>
+          </div>
+        )}
+        {/* Input Fields */}
+        <div className="mt-4">
+          <label htmlFor="challanNumber" className="block text-sm font-medium text-gray-700">
+            Enter Challan Number
+          </label>
+          <input
+            type="text"
+            id="challanNumber"
+            name="challanNumber"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Enter Challan Number"
+            value={challanNumber}
+            onChange={(e) => setChallanNumber(e.target.value)}
+          />
+        </div>
+        <div className="mt-4">
+          <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
+            Enter Quantity
+          </label>
+          <input
+            type="text"
+            id="quantity"
+            name="quantity"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Enter Quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </div>
+        <div className="mt-4">
+          <label htmlFor="kg" className="block text-sm font-medium text-gray-700">
+            Kg
+          </label>
+          <input
+            type="text"
+            id="kg"
+            name="kg"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Kg"
+            value={kg}
+            onChange={(e) => setKg(e.target.value)}
+          />
+        </div>
+        <div className="mt-4">
+          <label htmlFor="meter" className="block text-sm font-medium text-gray-700">
+            Meter
+          </label>
+          <input
+            type="text"
+            id="meter"
+            name="meter"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Meter"
+            value={meter}
+            onChange={(e) => setMeter(e.target.value)}
+          />
+        </div>
+        <div className="mt-4">
+          <label htmlFor="roll" className="block text-sm font-medium text-gray-700">
+            Roll
+          </label>
+          <input
+            type="text"
+            id="roll"
+            name="roll"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Roll"
+            value={roll}
+            onChange={(e) => setRoll(e.target.value)}
+          />
+        </div>
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+          >
+            Submit
+          </button>
+        </div>
+        {lotNumber && (
+          <div className="mt-4">
+            <p className="text-gray-700">Generated Lot Number: {lotNumber}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

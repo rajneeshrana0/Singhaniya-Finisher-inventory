@@ -2,26 +2,36 @@ const Product = require("../models/Product");
 const Purchase = require("../models/purchase");
 const Sales = require("../models/sales");
 
-// Add Post
 const addProduct = (req, res) => {
-  console.log("req: ", req.body.userId);
-  const addProduct = new Product({
-    userID: req.body.userId,
-    name: req.body.name,
-    manufacturer: req.body.manufacturer,
-    stock: 0,
-    description: req.body.description,
+  const { partyname, challn, quality, kg,meter, roll } = req.body;
+  const userId = req.user.userId;
+  console.log(userId);
+
+  // Create a new product document
+  const newProduct = new Product({
+    userID: userId,
+    partyname: partyname,
+    challn: challn,
+    quality: quality,
+    kg: kg,
+    meter: meter,
+    roll: roll,
   });
 
-  addProduct
+  // Save the product document to the database
+  newProduct
     .save()
     .then((result) => {
+      console.log("Product saved:", result);
       res.status(200).send(result);
     })
     .catch((err) => {
-      res.status(402).send(err);
+      console.error("Error saving product:", err);
+      res.status(500).send("Error saving product");
     });
 };
+
+
 
 // Get All Products
 const getAllProducts = async (req, res) => {

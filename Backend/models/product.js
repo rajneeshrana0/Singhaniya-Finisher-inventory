@@ -4,24 +4,35 @@ const ProductSchema = new mongoose.Schema(
   {
     userID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'users',
+      ref: "users",
       required: true,
     },
-    name: {
+    partyname: {
       type: String,
       required: true,
     },
-    manufacturer: {
+    challn: {
       type: String,
       required: true,
     },
-    stock: {
+    quality: {
+      type: String,
+      required: true,
+    },
+    kg: {
+      type: Number,
+      required: true,
+    },
+    meter: {
+      type: Number,
+      required: true,
+    },
+    roll: {
       type: Number,
       required: true,
     },
     description: String,
   },
-  { timestamps: true }
 );
 
 
