@@ -58,10 +58,7 @@ function Login() {
         if (!response.ok) {
           throw new Error("Login failed.");
         }
-        // If login is successful, redirect to the home page or perform further actions
-        // You can handle this part based on your application's requirements
         console.log("User logged in successfully.");
-        // Redirect to home page or perform further actions
       })
       .catch((error) => {
         console.error("Login error:", error.message);

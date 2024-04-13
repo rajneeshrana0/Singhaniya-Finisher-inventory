@@ -3,16 +3,16 @@ const Purchase = require("../models/purchase");
 const Sales = require("../models/sales");
 
 const addProduct = (req, res) => {
-  const { partyname, challn, quality, kg,meter, roll } = req.body;
+  const { selectedOption, challanNumber, quantity, kg,meter, roll } = req.body;
   const userId = req.user.userId;
   console.log(userId);
 
   // Create a new product document
   const newProduct = new Product({
     userID: userId,
-    partyname: partyname,
-    challn: challn,
-    quality: quality,
+    selectedOption: selectedOption,
+    challanNumber: challanNumber,
+    quantity: quantity,
     kg: kg,
     meter: meter,
     roll: roll,

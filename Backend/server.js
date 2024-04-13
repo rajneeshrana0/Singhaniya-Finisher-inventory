@@ -26,18 +26,18 @@ app.use(cors(corsOptions));
 function authenticateUser(req, res, next) {
   let token = req.cookies.token;
 
-  // Check if token is present in cookies
-  if (!token) {
-    // If not present in cookies, check headers
+  // Check if token is present in headers (for Postman testing)
+  if (!token && req.headers.authorization) {
     token = req.headers.authorization;
-
-    // If token is present in headers, extract it
     if (token && token.startsWith('Bearer ')) {
-      // Remove 'Bearer ' from token string
       token = token.slice(7);
     } else {
       return res.status(401).json({ message: "Unauthorized" });
     }
+  }
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
@@ -49,8 +49,6 @@ function authenticateUser(req, res, next) {
     next();
   });
 }
-
-
 
 // Products API
 app.use("/api/product", authenticateUser, productRoute);
@@ -68,7 +66,6 @@ app.use("/api/sales", salesRoute);
 let userAuthCheck;
 app.post("/api/login", async (req, res) => {
   console.log(req.body);
-  // res.send("hi");
   try {
     const user = await User.findOne({
       email: req.body.email,
@@ -88,7 +85,6 @@ app.post("/api/login", async (req, res) => {
     res.send(error);
   }
 });
-
 
 // Getting User Details of login user
 app.get("/api/login", (req, res) => {
@@ -111,18 +107,16 @@ app.post("/api/register", (req, res) => {
     .save()
     .then((result) => {
       res.status(200).send(result);
-      alert("Signup Successfull");
+      alert("Signup Successful");
     })
     .catch((err) => console.log("Signup: ", err));
   console.log("request: ", req.body);
 });
 
-
-app.get("/testget", async (req,res)=>{
-  const result = await Product.findOne({ _id: '6429979b2e5434138eda1564'})
+app.get("/testget", async (req, res) => {
+  const result = await Product.findOne({ _id: '6429979b2e5434138eda1564' })
   res.json(result)
-
-})
+});
 
 // Here we are listening to the server
 app.listen(PORT, () => {

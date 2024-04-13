@@ -7,15 +7,15 @@ const ProductSchema = new mongoose.Schema(
       ref: "users",
       required: true,
     },
-    partyname: {
+    selectedOption: {
       type: String,
       required: true,
     },
-    challn: {
+    challanNumber: {
       type: String,
       required: true,
     },
-    quality: {
+    quantity: {
       type: String,
       required: true,
     },
@@ -31,7 +31,9 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    description: String,
+    // generateLotNumber: {
+    //   type: Number,
+    // }
   },
 );
 

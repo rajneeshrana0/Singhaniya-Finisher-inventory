@@ -65,20 +65,23 @@ const Dropdown = () => {
       const response = await axios.post(
         "http://localhost:4000/api/product/add",
         {
-          selectedOption ,
+          selectedOption,
           challanNumber,
           quantity,
           kg,
           meter,
-          roll,
-          lotNumber
+          roll,          
         },
+        {
+          withCredentials: true 
+        }
       );
     
       console.log("Data saved successfully:", response.data);
     } catch (error) {
       console.error("Error saving data:", error);
     }
+    
     
   };
 
