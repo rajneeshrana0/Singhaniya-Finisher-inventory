@@ -173,6 +173,7 @@ function SideMenu() {
       </div>
 
       <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
+      <Link to="/profile-page">
         <div className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
           <img
             alt="Profile"
@@ -190,6 +191,8 @@ function SideMenu() {
             </p>
           </div>
         </div>
+        </Link>
+
       </div>
     </div>
   );

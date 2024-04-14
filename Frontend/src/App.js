@@ -21,6 +21,8 @@ import ProcessingIssue from "./pages/ProcessingIssue";
 import FinishIssue from "./pages/FinishIssue";
 import DispatchStockIn from "./pages/DispatchStockIn";
 import AccountStockOut from "./pages/AccountStockOut";
+import ProfilePage from "./pages/ProfilePage";
+
 const App = () => {
   const [user, setUser] = useState("");
   const [loader, setLoader] = useState(true);
@@ -91,6 +93,7 @@ const App = () => {
             <Route path="finish-issue" element={<FinishIssue/>} />
             <Route path="dispatch-stock" element={<DispatchStockIn/>} />
             <Route path="account-stock-out" element={<AccountStockOut/>} />
+            <Route path="profile-page" element={<ProfilePage />} />
           </Route>
           <Route path="*" element={<NoPageFound />} />
         </Routes>
