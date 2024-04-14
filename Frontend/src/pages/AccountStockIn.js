@@ -20,8 +20,11 @@ const Dropdown = () => {
 
    const fetchSubmittedData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/product/all");
+      const response = await axios.get("http://localhost:4000/api/product/all" ,  {
+          withCredentials: true 
+        });
       setSubmittedData(response.data);
+      console.log(setSubmittedData)
     } catch (error) {
       console.error("Error fetching submitted data:", error);
     }
@@ -278,6 +281,8 @@ const Dropdown = () => {
           </div>
         )}
       </div>
+
+
       {/* Submitted data table */}
       <div className="mt-12 w-full ">
         <h2 className="text-lg font-semibold mb-4"> Account Stock IN Submitted Data</h2>
