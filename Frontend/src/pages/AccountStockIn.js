@@ -18,21 +18,31 @@ const Dropdown = () => {
 
   const options = ["Rajneesh Rana", "Liza Ahuja", "Nitish Kumar"];
 
-   const fetchSubmittedData = async () => {
+  useEffect(() => {
+    fetchSubmittedData();
+  }, []);
+
+  const fetchSubmittedData = async () => {
     try {
+
+      const response = await axios.get(
+        "http://localhost:4000/api/product/all",
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+
       const response = await axios.get("http://localhost:4000/api/product/all" ,  {
           withCredentials: true 
         });
+
       setSubmittedData(response.data);
       console.log(setSubmittedData)
     } catch (error) {
       console.error("Error fetching submitted data:", error);
     }
   };
-
-  useEffect(() => {
-    fetchSubmittedData();
-  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -45,8 +55,18 @@ const Dropdown = () => {
 
   const generateLotNumber = () => {
     const months = [
-      "JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
-      "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
     ];
 
     const currentDate = new Date();
@@ -75,8 +95,6 @@ const Dropdown = () => {
     // Call the generateLotNumber function to generate the lot number
     generateLotNumber();
 
-    
-
     try {
       // Send the form data to the API
       const response = await axios.post(
@@ -87,23 +105,18 @@ const Dropdown = () => {
           quantity,
           kg,
           meter,
-          roll,          
+          roll,
         },
         {
-          withCredentials: true 
+          withCredentials: true,
         }
       );
-    
+
       console.log("Data saved successfully:", response.data);
     } catch (error) {
       console.error("Error saving data:", error);
     }
-    
-    
   };
-
-  const dataToShow = submittedData.filter(dataItem => dataItem.selectedOption !== selectedOption);
-
 
   return (
     <div className="flex flex-col items-center">
@@ -119,7 +132,10 @@ const Dropdown = () => {
               onClick={toggleDropdown}
             >
               <span className="text-lg font-bold">Party Name</span>
-              <ChevronDownIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
+              <ChevronDownIcon
+                className="ml-2 -mr-1 h-5 w-5"
+                aria-hidden="true"
+              />
             </button>
           </div>
           <Transition appear show={isOpen} as={Fragment}>
@@ -140,7 +156,9 @@ const Dropdown = () => {
                 >
                   <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
                 </Transition.Child>
-                <span className="inline-block h-screen align-middle">&#8203;</span>
+                <span className="inline-block h-screen align-middle">
+                  &#8203;
+                </span>
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -171,7 +189,9 @@ const Dropdown = () => {
                     <div className="mt-4">
                       {options
                         .filter((option) =>
-                          option.toLowerCase().includes(searchTerm.toLowerCase())
+                          option
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase())
                         )
                         .map((option, index) => (
                           <button
@@ -192,12 +212,17 @@ const Dropdown = () => {
         {/* Display selected option */}
         {selectedOption && (
           <div className="mt-4 text-center">
-            <p className="text-gray-700">Selected Party Name: {selectedOption}</p>
+            <p className="text-gray-700">
+              Selected Party Name: {selectedOption}
+            </p>
           </div>
         )}
         {/* Input Fields */}
         <div className="mt-4">
-          <label htmlFor="challanNumber" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="challanNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
             Enter Challan Number
           </label>
           <input
@@ -211,7 +236,10 @@ const Dropdown = () => {
           />
         </div>
         <div className="mt-4">
-          <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="quantity"
+            className="block text-sm font-medium text-gray-700"
+          >
             Enter Quantity
           </label>
           <input
@@ -225,7 +253,10 @@ const Dropdown = () => {
           />
         </div>
         <div className="mt-4">
-          <label htmlFor="kg" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="kg"
+            className="block text-sm font-medium text-gray-700"
+          >
             Kg
           </label>
           <input
@@ -239,7 +270,10 @@ const Dropdown = () => {
           />
         </div>
         <div className="mt-4">
-          <label htmlFor="meter" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="meter"
+            className="block text-sm font-medium text-gray-700"
+          >
             Meter
           </label>
           <input
@@ -253,7 +287,10 @@ const Dropdown = () => {
           />
         </div>
         <div className="mt-4">
-          <label htmlFor="roll" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="roll"
+            className="block text-sm font-medium text-gray-700"
+          >
             Roll
           </label>
           <input
@@ -285,22 +322,40 @@ const Dropdown = () => {
 
       {/* Submitted data table */}
       <div className="mt-12 w-full ">
-        <h2 className="text-lg font-semibold mb-4"> Account Stock IN Submitted Data</h2>
+        <h2 className="text-lg font-semibold mb-4">
+          {" "}
+          Account Stock IN Submitted Data
+        </h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
             <thead className="bg-blue-800 text-white">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Party Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Quality</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Kg</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Meter</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">Roll</th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Party Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Quality
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Kg
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Meter
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Roll
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {submittedData.map((dataItem, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                  <td className="px-6 py-4 whitespace-nowrap">{dataItem.selectedOption}</td>
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.selectedOption}
+                  </td>
                   {/* Add cells for other fields */}
                 </tr>
               ))}
@@ -309,7 +364,6 @@ const Dropdown = () => {
         </div>
       </div>
     </div>
-  
   );
 };
 
