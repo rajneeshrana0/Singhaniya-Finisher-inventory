@@ -86,7 +86,7 @@ function SideMenu() {
                     alt="store-icon"
                     src={require("../assets/jbc.jpeg")}
                   />
-                  <span className="text-sm font-medium"> Job Card Issue </span>
+                  <span className="text-sm font-medium"> Account Stock Table </span>
                 </div>
               </Link>
             </summary>
