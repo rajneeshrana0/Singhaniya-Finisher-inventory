@@ -21,8 +21,8 @@ function JobCardIssue() {
        fetchSubmittedData();
      }, []);
   return (
-    <div className=" w-full flex flex-col items-center">
-      <div className="w-full max-w-md mt-6">
+    <div className="  flex flex-col items-center">
+      <div className="w-full  mt-6">
         {/* Submitted data table */}
         <div className="mt-12 w-full ">
           <h2 className="text-lg font-semibold mb-4">
