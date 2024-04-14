@@ -34,6 +34,7 @@ const addProduct = (req, res) => {
 
 
 // Get All Products
+
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -41,6 +42,22 @@ const getAllProducts = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
+
+// const getAllProducts = async (req, res) => {
+//   const findAllProducts = await Product.find({
+//     userID: req.params.userId,
+//   }).sort({ _id: -1 }); // -1 for descending;
+//   res.json(findAllProducts);
+// };
+
+const getAllProducts = (req, res) => {
+  try {
+    const findAllProducts = Product.find({}, { _id: 0 }).sort({ _id: -1 });
+    res.json(findAllProducts);
+    console.log(findAllProducts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+
   }
 };
 
