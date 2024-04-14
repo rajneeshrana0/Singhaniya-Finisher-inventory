@@ -10,11 +10,18 @@ const GreyStockIn = () => {
   const [meter, setMeter] = useState("");
   const [roll, setRoll] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
+  const [processTypes, setProcessTypes] = useState([]);
 
 
 
-
-
+  // const handleProcessTypeChange = (e) => {
+  //   const selectedProcessType = e.target.value;
+  //   if (processTypes.includes(selectedProcessType)) {
+  //     setProcessTypes(processTypes.filter(type => type !== selectedProcessType));
+  //   } else {
+  //     setProcessTypes([...processTypes, selectedProcessType]);
+  //   }
+  // };
 
   const handleLotNumberChange = (e) => {
     setLotNumber(e.target.value);
@@ -164,6 +171,40 @@ const GreyStockIn = () => {
             onChange={(e) => setRoll(e.target.value)}
           />
         </div>
+
+        <div className="flex flex-col mt-4">
+          <label className="text-gray-700 font-semibold">Select Process Types:</label>
+          <div className="mt-1">
+            <label className="inline-flex items-center mr-4">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-blue-600"
+                value="half"
+                checked={processTypes.includes("half")}
+              />
+              <span className="ml-2">Half Process</span>
+            </label>
+            <label className="inline-flex items-center mr-4">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-blue-600"
+                value="full"
+                checked={processTypes.includes("full")}
+              />
+              <span className="ml-2">Full Process</span>
+            </label>
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-blue-600"
+                value="finish"
+                checked={processTypes.includes("finish")}
+              />
+              <span className="ml-2">Finish</span>
+            </label>
+          </div>
+        </div>
+      
         <div className="mt-4">
           <button
             type="button"
