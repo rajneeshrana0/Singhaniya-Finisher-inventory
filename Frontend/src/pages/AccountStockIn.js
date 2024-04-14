@@ -32,11 +32,6 @@ const Dropdown = () => {
         }
       );
       console.log(response.data);
-
-      const response = await axios.get("http://localhost:4000/api/product/all" ,  {
-          withCredentials: true 
-        });
-
       setSubmittedData(response.data);
       console.log(setSubmittedData)
     } catch (error) {
