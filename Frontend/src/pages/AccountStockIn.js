@@ -20,6 +20,24 @@ const Dropdown = () => {
 
 
 
+  const fetchSubmittedData = async () => {
+    try {
+
+      const response = await axios.get(
+        "http://localhost:4000/api/product/all",
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      setSubmittedData(response.data);
+      console.log(setSubmittedData)
+    } catch (error) {
+      console.error("Error fetching submitted data:", error);
+    }
+  };
+
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
