@@ -1,51 +1,86 @@
-import React, { useState } from "react";
+import React,{useState, useEffect} from 'react'
+import axios from "axios";
+function JobCardIssue() {
+ const [submittedData, setSubmittedData] = useState([]);
+     const fetchSubmittedData = async () => {
+       try {
+         const response = await axios.get(
+           "http://localhost:4000/api/product/all",
+           {
+             withCredentials: true,
+           }
+         );
+         console.log(response);
+         setSubmittedData(response.data);
+       } catch (error) {
+         console.error("Error fetching submitted data:", error);
+       }
+     };
 
-const LotNumberGenerator = () => {
-  // State for storing the generated lot number
-  const [lotNumber, setLotNumber] = useState("");
-
-  // Function to generate lot numbers
-  const generateLotNumber = () => {
-    const months = [
-      "JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
-      "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-    ];
-
-    const currentDate = new Date();
-    const currentMonth = months[currentDate.getMonth()]; // Get current month
-
-    // Get the last generated lot number from the state
-    const lastGeneratedLotNumber = lotNumber.split(" ");
-    let lastNumber = 0;
-
-    // If a lot number was generated previously, extract the number part
-    if (lastGeneratedLotNumber.length === 2) {
-      lastNumber = parseInt(lastGeneratedLotNumber[1]);
-    }
-
-    // Increment the last generated number
-    const newLotNumber = `${currentMonth} ${lastNumber + 1}`;
-
-    // Update the state with the new lot number
-    setLotNumber(newLotNumber);
-  };
-
+     useEffect(() => {
+       fetchSubmittedData();
+     }, []);
   return (
-    <div className="flex flex-col items-center justify-center mt-8">
-      <button
-        type="button"
-        onClick={generateLotNumber}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-      >
-        Generate Lot Number
-      </button>
-      {lotNumber && (
-        <div className="mt-4">
-          <p className="text-gray-700">Generated Lot Number: {lotNumber}</p>
+    <div className=" w-full flex flex-col items-center">
+      <div className="w-full max-w-md mt-6">
+        {/* Submitted data table */}
+        <div className="mt-12 w-full ">
+          <h2 className="text-lg font-semibold mb-4">
+            {" "}
+            Account Stock IN Submitted Data
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+              <thead className="bg-blue-800 text-white">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Party Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Quality
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Kg
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Meter
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Roll
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {submittedData.map((dataItem, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.selectedOption}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.quantity}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.kg}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.meter}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.roll}
+                    </td>
+                    {/* Add cells for other fields */}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
-};
+}
 
-export default LotNumberGenerator;
+export default JobCardIssue
