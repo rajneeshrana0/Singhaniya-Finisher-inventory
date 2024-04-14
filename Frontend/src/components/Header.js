@@ -12,7 +12,7 @@ const navigation = [
   { name: "Manage Store", href: "/manage-store", current: false },
 ];
 
-const userNavigation = [{ name: "Sign out", href: "./login" }];
+const userNavigation = [{ name: "Sign out", href: "#" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,6 +21,33 @@ function classNames(...classes) {
 export default function Header() {
   const authContext = useContext(AuthContext);
   const localStorageData = JSON.parse(localStorage.getItem("user"));
+
+ const handleSignOut = async () => {
+   try {
+     const response = await fetch("http://localhost:4000/api/logout", {
+       method: "GET",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       credentials: "include", // Include cookies in the request
+     });
+     if (response.ok) {
+       // Clear local storage or perform any other necessary actions upon successful logout
+       localStorage.removeItem("user");
+       // Call signout method from authContext if needed
+       authContext.signout();
+       // Redirect to login page or any other page after logout if needed
+       // window.location.href = "/login";
+     } else {
+       // Handle error response
+       console.error("Logout failed:", response.statusText);
+     }
+   } catch (error) {
+     console.error("Error during logout:", error);
+   }
+ };
+
+
   return (
     <>
       <div className="min-h-full">
@@ -38,7 +65,7 @@ export default function Header() {
                           alt="Inventory Management System"
                         />
                         <span className="font-bold text-white italic">
-                        SINGHANIA FINISHERS
+                          SINGHANIA FINISHERS
                         </span>
                       </div>
                     </div>
@@ -78,17 +105,15 @@ export default function Header() {
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
-                                  <Link
-                                    to={item.href}
+                                  <button
+                                    onClick={handleSignOut}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
                                       "block px-4 py-2 text-sm text-gray-700"
                                     )}
                                   >
-                                    <span onClick={() => authContext.signout()}>
-                                      {item.name}{" "}
-                                    </span>
-                                  </Link>
+                                    <span>{item.name}</span>
+                                  </button>
                                 )}
                               </Menu.Item>
                             ))}
@@ -124,7 +149,6 @@ export default function Header() {
                       <Disclosure.Button
                         key={item.name}
                         as="a"
-                        // href={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
@@ -149,9 +173,7 @@ export default function Header() {
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">
-                        {localStorageData.firstName +
-                          " " +
-                          localStorageData.lastName}
+                        {localStorageData.firstName} {localStorageData.lastName}
                       </div>
                       <div className="text-sm font-medium leading-none text-gray-400">
                         {localStorageData.email}
@@ -167,16 +189,13 @@ export default function Header() {
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
-                      <Disclosure.Button
+                      <button
                         key={item.name}
-                        as="a"
-                        href={item.href}
+                        onClick={handleSignOut}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
-                        <span onClick={() => authContext.signout()}>
-                          {item.name}{" "}
-                        </span>
-                      </Disclosure.Button>
+                        {item.name}
+                      </button>
                     ))}
                   </div>
                 </div>
