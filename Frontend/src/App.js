@@ -1,4 +1,5 @@
 import React from "react";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -11,17 +12,23 @@ import AuthContext from "./AuthContext";
 import ProtectedWrapper from "./ProtectedWrapper";
 import { useEffect, useState } from "react";
 
-import AccountStockIn from "./pages/AccountStockIn";
-import JobCardIssue from "./pages/JobCardIssue";
-import GreyStockIn from "./pages/GreyStockIn";
+import AccountStockIn from "./account-in/AccountStockIn";
+import JobCardIssue from "./account-in/JobCardIssue";
+
+import AccountStockOut from "./account-out/AccountStockOut";
+import AccountStockOutTable from "./account-out/AccountStockOutTable";
+
+import GreyStockIn from "./grey-stock/GreyStockIn";
+
 import HeatIssue from "./pages/HeatIssue";
 import ProcessingIssue from "./pages/ProcessingIssue";
 import FinishIssue from "./pages/FinishIssue";
-import DispatchStockIn from "./pages/DispatchStockIn";
-import AccountStockOut from "./pages/AccountStockOut";
+
+
+import DispatchStockIn from "./dispatch/DispatchStockIn";
+import DispatchStockTable from "./dispatch/DispatchStockTable";       
+
 import ProfilePage from "./pages/ProfilePage";
-import DispatchStockTable from "./pages/DispatchStockTable";
-import AccountStockOutTable from "./pages/AccountStockOutTable";
 import Test from "./pages/Test";
 
 const App = () => {
