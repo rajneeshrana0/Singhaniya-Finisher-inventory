@@ -63,7 +63,7 @@ app.use("/api/purchase", purchaseRoute);
 app.use("/api/sales", salesRoute);
 
 // ------------- Signin --------------
-let userAuthCheck;
+let userAuthCheck = {};;
 app.post("/api/login", async (req, res) => {
   console.log(req.body);
   try {
@@ -88,8 +88,19 @@ app.post("/api/login", async (req, res) => {
 
 // Getting User Details of login user
 app.get("/api/login", (req, res) => {
-  res.send(userAuthCheck);
+  if (Object.keys(userAuthCheck).length !== 0) {
+    res.send(userAuthCheck);
+  } else {
+    res.status(401).send("No user logged in");
+  }
 });
+
+app.get("/api/logout", (req, res) => {
+  // Clear the token cookie
+  res.clearCookie("token");
+  res.send("Logout successful");
+});
+
 // ------------------------------------
 
 // Registration API
