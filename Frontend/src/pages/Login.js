@@ -2,6 +2,8 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [form, setForm] = useState({
@@ -9,6 +11,7 @@ function Login() {
     password: "",
   });
 
+  const notify = () => toast("Login SuccessFull!");
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,50 +25,48 @@ function Login() {
       fetch("http://localhost:4000/api/login")
         .then((response) => response.json())
         .then((data) => {
-          alert("Successfully Login");
+          notify();
           localStorage.setItem("user", JSON.stringify(data));
           authContext.signin(data._id, () => {
             navigate("/");
           });
         })
         .catch((err) => {
-          alert("Wrong credentials, Try again")
+          alert("Wrong credentials, Try again");
           console.log(err);
         });
     }, 3000);
   };
 
   const loginUser = (e) => {
-    // Prevent the form from submitting normally
     e.preventDefault();
-  
-    // Check if form fields are empty
     if (form.email === "" || form.password === "") {
-      alert("Please enter both email and password to login.");
+      toast.error("Please enter both email and password to login.");
       return;
     }
-  
-    // Make a POST request to the login API endpoint
     fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify(form),
-      credentials: "include", // Include cookies in the request
+      credentials: "include", 
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Login failed.");
         }
+        notify();
         console.log("User logged in successfully.");
+        authCheck(); 
       })
       .catch((error) => {
         console.error("Login error:", error.message);
-        alert("Login failed. Please try again.");
+        toast.error("Wrong credentials, Try again.");
       });
-      authCheck();
+      
   };
+
   
 
 
@@ -76,6 +77,7 @@ function Login() {
   
   return (
     <>
+      <ToastContainer />
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen  items-center place-items-center">
         <div className="flex justify-center">
           <img src={require("../assets/signup.jpg")} alt="" />
@@ -92,9 +94,7 @@ function Login() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Or
-              <span
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
+              <span className="font-medium text-indigo-600 hover:text-indigo-500">
                 start your 14-day free trial
               </span>
             </p>
@@ -153,9 +153,7 @@ function Login() {
               </div>
 
               <div className="text-sm">
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
+                <span className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </span>
               </div>
@@ -177,9 +175,7 @@ function Login() {
               </button>
               <p className="mt-2 text-center text-sm text-gray-600">
                 Or{" "}
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
+                <span className="font-medium text-indigo-600 hover:text-indigo-500">
                   Don't Have an Account, Please{" "}
                   <Link to="/register"> Register now </Link>
                 </span>
