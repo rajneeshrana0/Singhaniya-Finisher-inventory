@@ -3,6 +3,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import AuthContext from "../AuthContext";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: true },
@@ -22,34 +24,35 @@ export default function Header() {
   const authContext = useContext(AuthContext);
   const localStorageData = JSON.parse(localStorage.getItem("user"));
 
- const handleSignOut = async () => {
-   try {
-     const response = await fetch("http://localhost:4000/api/logout", {
-       method: "GET",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       credentials: "include", // Include cookies in the request
-     });
-     if (response.ok) {
-       // Clear local storage or perform any other necessary actions upon successful logout
-       localStorage.removeItem("user");
-       // Call signout method from authContext if needed
-       authContext.signout();
-       // Redirect to login page or any other page after logout if needed
-       // window.location.href = "/login";
-     } else {
-       // Handle error response
-       console.error("Logout failed:", response.statusText);
-     }
-   } catch (error) {
-     console.error("Error during logout:", error);
-   }
- };
+const handleSignOut = async () => {
+  try {
+    const response = await fetch("http://localhost:4000/api/logout", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    if (response.ok) {
+      toast("Logout Successful!", { autoClose: 2000 }); 
+      setTimeout(() => {
+        localStorage.removeItem("user");
+        authContext.signout();
+      }, 2000);
+    } else {
+      console.error("Logout failed:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error during logout:", error);
+  }
+};
+
+
 
 
   return (
     <>
+      <ToastContainer />
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
