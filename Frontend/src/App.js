@@ -5,14 +5,12 @@ import Dashboard from "./pages/Dashboard";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Inventory from "./pages/Inventory";
+
 import NoPageFound from "./pages/NoPageFound";
 import AuthContext from "./AuthContext";
 import ProtectedWrapper from "./ProtectedWrapper";
 import { useEffect, useState } from "react";
-import Store from "./pages/Store";
-import Sales from "./pages/Sales";
-import PurchaseDetails from "./pages/PurchaseDetails";
+
 import AccountStockIn from "./pages/AccountStockIn";
 import JobCardIssue from "./pages/JobCardIssue";
 import GreyStockIn from "./pages/GreyStockIn";
@@ -22,6 +20,9 @@ import FinishIssue from "./pages/FinishIssue";
 import DispatchStockIn from "./pages/DispatchStockIn";
 import AccountStockOut from "./pages/AccountStockOut";
 import ProfilePage from "./pages/ProfilePage";
+import DispatchStockTable from "./pages/DispatchStockTable";
+import AccountStockOutTable from "./pages/AccountStockOutTable";
+import Test from "./pages/Test";
 
 const App = () => {
   const [user, setUser] = useState("");
@@ -94,6 +95,10 @@ const App = () => {
             <Route path="dispatch-stock" element={<DispatchStockIn/>} />
             <Route path="account-stock-out" element={<AccountStockOut/>} />
             <Route path="profile-page" element={<ProfilePage />} />
+            <Route path="dispatch-data" element={<DispatchStockTable/>} />
+            <Route path="stock-out-data" element={<AccountStockOutTable/>} />
+            <Route path="testing-data" element={<Test/>} />
+
           </Route>
           <Route path="*" element={<NoPageFound />} />
         </Routes>
