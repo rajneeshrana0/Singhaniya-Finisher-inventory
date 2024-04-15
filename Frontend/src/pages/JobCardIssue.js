@@ -37,6 +37,9 @@ function JobCardIssue() {
                     Party Name
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Challan Number
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                     Quality
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase">
@@ -58,6 +61,9 @@ function JobCardIssue() {
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       {dataItem.selectedOption}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.challanNumber}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {dataItem.quantity}
