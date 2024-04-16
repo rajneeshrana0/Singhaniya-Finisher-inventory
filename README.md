@@ -1,7 +1,6 @@
-Sure, here's a complete README file for your project, incorporating the components and features you've described:
+Here's the modified README file with the live URL added:
 
----
-
+```markdown
 # Fabric Management System
 
 The Fabric Management System is a web application designed to streamline the management of fabric-related processes, including stock management, quality control, and dispatch tracking. It provides features such as stock in, stock out, heat issue tracking, and dispatch management.
@@ -72,6 +71,10 @@ Contributions to the Fabric Management System are welcome! To contribute, follow
 
 The Fabric Management System is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
+## Live Demo
 
-Feel free to customize this README file further to suit your project's specific needs. Add badges, screenshots, or links to live demos to enhance the README's visual appeal and usefulness.
+Check out the live demo of the Fabric Management System [here](https://singhaniya-finisher-inventory-5vag.vercel.app/login).
+
+```
+
+Feel free to customize the content further if needed!
