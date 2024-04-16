@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const HeatIssue = () => {
   const [completed, setCompleted] = useState(false);
   const [completionDate, setCompletionDate] = useState("");
   const [lotNumber, setLotNumber] = useState("");
-  const [partyName, setPartyName] = useState("");
-  const [challanNumber, setChallanNumber] = useState("");
   const [submittedData, setSubmittedData] = useState([]);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const HeatIssue = () => {
   const fetchSubmittedData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/product/all",
+        "http://localhost:4000/api/purchase/getHalfProcessData",
         { withCredentials: true }
       );
       setSubmittedData(response.data);
@@ -39,44 +38,61 @@ const HeatIssue = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (!lotNumber) {
-      alert("Please enter Lot Number first.");
-      return;
-    }
+ const handleSubmit = async () => {
+   if (!lotNumber) {
+     toast.error("Please enter Lot Number first.");
+     return;
+   }
 
-    if (completed && completionDate) {
-      // Submit data to the table
-      const newDataItem = {
-        selectedOption: partyName,
-        quantity: "",
-        kg: "",
-        meter: "",
-        roll: "",
-        completionDate: completionDate
-      }; // Adjust as per your data structure
-      setSubmittedData([...submittedData, newDataItem]);
+   try {
+  
+     const response = await axios.post(
+       "http://localhost:4000/api/sales/add",
+       { lotNumber },
+       { withCredentials: true }
+     );
 
-      // Clear form fields after submission
-      setLotNumber("");
-      setPartyName("");
-      setChallanNumber("");
-      setCompleted(false);
-      setCompletionDate("");
-    } else {
-      alert("Please mark the work as completed before submitting.");
-    }
-  };
+  
+     if (response.status === 201) {
+      
+       toast.success("Lot number submitted successfully!");
+   
+       const newDataItem = {
+         selectedOption: "",
+         quantity: "",
+         kg: "",
+         meter: "",
+         roll: "",
+         completionDate: completionDate,
+       };
+       setSubmittedData([...submittedData, newDataItem]);
+  
+       setLotNumber("");
+       setCompleted(false);
+       setCompletionDate("");
+     } else {
+ 
+       toast.error("Error submitting lot number. Please try again.");
+     }
+   } catch (error) {
+     console.error("Error submitting lot number:", error);
+   
+     toast.error("Error submitting lot number. Please try again.");
+   }
+ };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center text-gray-800 shadow-lg bg-yellow-400 rounded-md p-6 hover:scale-105 transition-transform duration-300 w-full">
-        Heat  Management
+        Heat Management
       </h1>
 
       <div className="mt-8 grid grid-cols-1 gap-6">
         <div>
-          <label htmlFor="lotNumber" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="lotNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
             Lot Number
           </label>
           <input
@@ -98,14 +114,20 @@ const HeatIssue = () => {
           onChange={handleToggleCompletion}
           disabled={!lotNumber}
         />
-        <label htmlFor="completed" className="ml-2 block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="completed"
+          className="ml-2 block text-sm font-medium text-gray-700"
+        >
           {lotNumber ? "Work Completed" : "Enter Lot Number first"}
         </label>
       </div>
 
       {completed && (
         <div className="mt-4">
-          <label htmlFor="completionDate" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="completionDate"
+            className="block text-sm font-medium text-gray-700"
+          >
             Completion Date
           </label>
           <input
@@ -129,15 +151,16 @@ const HeatIssue = () => {
       </div>
 
       <div className="mt-12 w-full">
-        <h2 className="text-lg font-semibold mb-4">
-          Account Stock IN Submitted Data
-        </h2>
+        <h2 className="text-lg font-semibold mb-4">Heat Issue</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
             <thead className="bg-blue-800 text-white">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                   Party Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Challan Number
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                   Quality
@@ -152,7 +175,10 @@ const HeatIssue = () => {
                   Roll
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Completion Date
+                  Process
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Lot Number
                 </th>
               </tr>
             </thead>
@@ -166,11 +192,12 @@ const HeatIssue = () => {
                     {dataItem.selectedOption}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.quantity}
+                    {dataItem.challanNumber}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.kg}
+                    {dataItem.quantity}
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{dataItem.kg}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dataItem.meter}
                   </td>
@@ -178,7 +205,13 @@ const HeatIssue = () => {
                     {dataItem.roll}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.completionDate || "-"}
+                    {Array.isArray(dataItem.processTypes)
+                      ? dataItem.processTypes.join(", ")
+                      : "-"}
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.lotNumber}
                   </td>
                 </tr>
               ))}

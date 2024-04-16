@@ -69,11 +69,11 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/account-stock-in">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/asi.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Account Stock IN </span>
+                  <img alt="store-icon" src={require("../assets/asi.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Account Stock IN{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -82,11 +82,11 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/job-card">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/jbc.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Account Stock Table </span>
+                  <img alt="store-icon" src={require("../assets/jbc.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Account Stock Table{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -95,11 +95,18 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/grey-stock">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/gsi.jpeg")}
-                  />
+                  <img alt="store-icon" src={require("../assets/gsi.jpeg")} />
                   <span className="text-sm font-medium"> Grey Stock IN </span>
+                </div>
+              </Link>
+            </summary>
+          </details>
+          <details className="group [&_summary::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <Link to="/grey-table">
+                <div className="flex items-center gap-2">
+                  <img alt="store-icon" src={require("../assets/gsi.jpeg")} />
+                  <span className="text-sm font-medium"> Grey Table </span>
                 </div>
               </Link>
             </summary>
@@ -108,11 +115,18 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/heat-issue">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/hi.jpeg")}
-                  />
+                  <img alt="store-icon" src={require("../assets/hi.jpeg")} />
                   <span className="text-sm font-medium"> Heatset Issue </span>
+                </div>
+              </Link>
+            </summary>
+          </details>
+          <details className="group [&_summary::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <Link to="/heat-issue-table">
+                <div className="flex items-center gap-2">
+                  <img alt="store-icon" src={require("../assets/hi.jpeg")} />
+                  <span className="text-sm font-medium"> Heatset Issue Table </span>
                 </div>
               </Link>
             </summary>
@@ -121,11 +135,11 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/processing-issue">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/pi.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Processing Issue </span>
+                  <img alt="store-icon" src={require("../assets/pi.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Processing Issue{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -134,10 +148,7 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/finish-issue">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/fi.jpeg")}
-                  />
+                  <img alt="store-icon" src={require("../assets/fi.jpeg")} />
                   <span className="text-sm font-medium"> Finish Issue </span>
                 </div>
               </Link>
@@ -147,11 +158,11 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/dispatch-stock">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/dis.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Dispatch Stock In </span>
+                  <img alt="store-icon" src={require("../assets/dis.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Dispatch Stock In{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -160,11 +171,11 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/account-stock-out">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/aso.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Account Stock Out </span>
+                  <img alt="store-icon" src={require("../assets/aso.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Account Stock Out{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -173,11 +184,11 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/stock-out-data">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/aso.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Account Stock Out Table </span>
+                  <img alt="store-icon" src={require("../assets/aso.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Account Stock Out Table{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -186,26 +197,22 @@ function SideMenu() {
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/dispatch-data">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/aso.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Dispatch Stock Table </span>
+                  <img alt="store-icon" src={require("../assets/aso.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Dispatch Stock Table{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
           </details>
 
-
           <details className="group [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/testing-data">
                 <div className="flex items-center gap-2">
-                  <img
-                    alt="store-icon"
-                    src={require("../assets/aso.jpeg")}
-                  />
-                  <span className="text-sm font-medium"> Test  </span>
+                  <img alt="store-icon" src={require("../assets/aso.jpeg")} />
+                  <span className="text-sm font-medium"> Test </span>
                 </div>
               </Link>
             </summary>
@@ -214,26 +221,25 @@ function SideMenu() {
       </div>
 
       <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-      <Link to="/profile-page">
-        <div className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
-          <img
-            alt="Profile"
-            src={localStorageData.imageUrl}
-            className="h-10 w-10 rounded-full object-cover"
-          />
+        <Link to="/profile-page">
+          <div className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
+            <img
+              alt="Profile"
+              src={localStorageData.imageUrl}
+              className="h-10 w-10 rounded-full object-cover"
+            />
 
-          <div>
-            <p className="text-xs">
-              <strong className="block font-medium">
-                {localStorageData.firstName + " " + localStorageData.lastName}
-              </strong>
+            <div>
+              <p className="text-xs">
+                <strong className="block font-medium">
+                  {localStorageData.firstName + " " + localStorageData.lastName}
+                </strong>
 
-              <span> {localStorageData.email} </span>
-            </p>
+                <span> {localStorageData.email} </span>
+              </p>
+            </div>
           </div>
-        </div>
         </Link>
-
       </div>
     </div>
   );

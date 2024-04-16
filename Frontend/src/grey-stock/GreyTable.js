@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function JobCardIssue() {
+function GreyTable() {
   const [submittedData, setSubmittedData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchSubmittedData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/product/all",
+        "http://localhost:4000/api/purchase/all",
         {
           withCredentials: true,
         }
@@ -60,6 +60,12 @@ function JobCardIssue() {
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                   Roll
                 </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Process
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Lot Number
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -84,6 +90,12 @@ function JobCardIssue() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dataItem.roll}
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.processTypes.join(", ")}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.lotNumber}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -94,4 +106,4 @@ function JobCardIssue() {
   );
 }
 
-export default JobCardIssue;
+export default GreyTable;

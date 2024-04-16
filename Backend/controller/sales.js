@@ -1,70 +1,58 @@
 const Sales = require("../models/sales");
 const soldStock = require("../controller/soldStock");
+const Purchase = require("../models/purchase");
 
 // Add Sales
-const addSales = (req, res) => {
-  const addSale = new Sales({
-    userID: req.body.userID,
-    ProductID: req.body.productID,
-    StoreID: req.body.storeID,
-    StockSold: req.body.stockSold,
-    SaleDate: req.body.saleDate,
-    TotalSaleAmount: req.body.totalSaleAmount,
-  });
-
-  addSale
-    .save()
-    .then((result) => {
-      soldStock(req.body.productID, req.body.stockSold);
-      res.status(200).send(result);
-    })
-    .catch((err) => {
-      res.status(402).send(err);
-    });
-};
-
-// Get All Sales Data
-const getSalesData = async (req, res) => {
-  const findAllSalesData = await Sales.find({"userID": req.params.userID})
-    .sort({ _id: -1 })
-    .populate("ProductID")
-    .populate("StoreID"); // -1 for descending order
-  res.json(findAllSalesData);
-};
-
-// Get total sales amount
-const getTotalSalesAmount = async(req,res) => {
-  let totalSaleAmount = 0;
-  const salesData = await Sales.find({"userID": req.params.userID});
-  salesData.forEach((sale)=>{
-    totalSaleAmount += sale.TotalSaleAmount;
-  })
-  res.json({totalSaleAmount});
-
-}
-
-const getMonthlySales = async (req, res) => {
+const addSales = async (req, res) => {
   try {
-    const sales = await Sales.find();
+    const { lotNumber } = req.body;
+    const userId = req.user.userId;
 
-    // Initialize array with 12 zeros
-    const salesAmount = [];
-    salesAmount.length = 12;
-    salesAmount.fill(0)
+    const purchaseData = await Purchase.findOne({ lotNumber });
+    console.log(purchaseData);
 
-    sales.forEach((sale) => {
-      const monthIndex = parseInt(sale.SaleDate.split("-")[1]) - 1;
+    if (!purchaseData) {
+      return res
+        .status(404)
+        .json({ message: "Purchase data not found for the given lot number" });
+    }
 
-      salesAmount[monthIndex] += sale.TotalSaleAmount;
+    // Get current date and time
+    const currentDate = new Date();
+
+    const newSales = new Sales({
+      userID: userId,
+      lotNumber: lotNumber,
+      selectedOption: purchaseData.selectedOption,
+      challanNumber: purchaseData.challanNumber,
+      quantity: purchaseData.quantity,
+      kg: purchaseData.kg,
+      meter: purchaseData.meter,
+      roll: purchaseData.roll,
+      processTypes: purchaseData.processTypes,
+      completionDate: currentDate, 
     });
 
-    res.status(200).json({ salesAmount });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
+    const savedSales = await newSales.save();
+
+    res.status(201).json(savedSales);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
 
+const getSubmittedData = async (req, res) => {
+  try {
+    // Fetch all submitted sales data
+    const submittedData = await Sales.find();
 
-module.exports = { addSales, getMonthlySales, getSalesData,  getTotalSalesAmount};
+    res.status(200).json(submittedData);
+  } catch (error) {
+    console.error("Error fetching submitted data:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+module.exports = { addSales, getSubmittedData };
