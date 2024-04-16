@@ -54,13 +54,13 @@ function authenticateUser(req, res, next) {
 app.use("/api/product", authenticateUser, productRoute);
 
 // Store API
-app.use("/api/store", storeRoute);
+app.use("/api/store", authenticateUser, storeRoute);
 
 // Purchase API
-app.use("/api/purchase", purchaseRoute);
+app.use("/api/purchase", authenticateUser, purchaseRoute);
 
 // Sales API
-app.use("/api/sales", salesRoute);
+app.use("/api/sales", authenticateUser, salesRoute);
 
 // ------------- Signin --------------
 let userAuthCheck = {};;

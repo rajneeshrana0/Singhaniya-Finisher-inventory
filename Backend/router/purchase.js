@@ -6,7 +6,13 @@ const purchase = require("../controller/purchase");
 app.post("/add", purchase.addPurchase);
 
 // Get All Purchase Data
-app.get("/get/:userID", purchase.getPurchaseData);
+app.get("/all", purchase.getPurchaseData);
+
+app.get("/getHalfProcessData", purchase.getHalfProcessData);
+
+app.get("/getFullProcessData", purchase.getFullProcessData);
+
+app.get("/getfinishProcessData", purchase.getfinishProcessData);
 
 app.get("/get/:userID/totalpurchaseamount", purchase.getTotalPurchaseAmount);
 

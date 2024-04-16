@@ -7,27 +7,41 @@ const SaleSchema = new mongoose.Schema(
       ref: "users",
       required: true,
     },
-    ProductID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "product",
-      required: true,
-    },
-    StoreID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "store",
-      required: true,
-    },
-    StockSold: {
-      type: Number,
-      required: true,
-    },
-    SaleDate: {
+    lotNumber: {
       type: String,
       required: true,
     },
-    TotalSaleAmount: {
+    selectedOption: {
+      type: String,
+      required: true,
+    },
+    challanNumber: {
+      type: String,
+      required: true,
+    },
+    quantity: {
+      type: String,
+      required: true,
+    },
+    kg: {
       type: Number,
       required: true,
+    },
+    meter: {
+      type: Number,
+      required: true,
+    },
+    roll: {
+      type: Number,
+      required: true,
+    },
+    processTypes: {
+      type: [String],
+      required: true,
+    },
+    completionDate: {
+      type: Date, 
+      default: Date.now, 
     },
   },
   { timestamps: true }

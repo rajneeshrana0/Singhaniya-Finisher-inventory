@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function JobCardIssue() {
+function HeatIssueTable() {
   const [submittedData, setSubmittedData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchSubmittedData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:4000/api/product/all",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("http://localhost:4000/api/sales/data", {
+        withCredentials: true,
+      });
       console.log(response);
       setSubmittedData(response.data);
     } catch (error) {
@@ -23,6 +20,11 @@ function JobCardIssue() {
   useEffect(() => {
     fetchSubmittedData();
   }, []);
+
+  const formatCompletionDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+  };
 
   const filteredData = submittedData.filter((dataItem) =>
     dataItem.selectedOption.toLowerCase().includes(searchQuery.toLowerCase())
@@ -60,6 +62,15 @@ function JobCardIssue() {
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                   Roll
                 </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Process
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Lot Number
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Completion Date & Time
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -84,6 +95,15 @@ function JobCardIssue() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dataItem.roll}
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.processTypes.join(", ")}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.lotNumber}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {formatCompletionDate(dataItem.completionDate)}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -94,4 +114,4 @@ function JobCardIssue() {
   );
 }
 
-export default JobCardIssue;
+export default HeatIssueTable;

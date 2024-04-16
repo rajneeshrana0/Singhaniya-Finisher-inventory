@@ -22,8 +22,10 @@ import AccountStockOut from "./account-out/AccountStockOut";
 import AccountStockOutTable from "./account-out/AccountStockOutTable";
 
 import GreyStockIn from "./grey-stock/GreyStockIn";
+import GreyTable from "./grey-stock/GreyTable"
 
 import HeatIssue from "./pages/HeatIssue";
+import HeatIssueTable from './pages/HeatIssueTable'
 import ProcessingIssue from "./pages/ProcessingIssue";
 import FinishIssue from "./pages/FinishIssue";
 
@@ -96,19 +98,20 @@ const App = () => {
             <Route path="/purchase-details" element={<PurchaseDetails />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/manage-store" element={<Store />} /> */}
-            <Route path="account-stock-in" element={<AccountStockIn/>} />
-            <Route path="job-card" element={<JobCardIssue/>} />
-            <Route path="grey-stock" element={<GreyStockIn/>} />
-            <Route path="heat-issue" element={<HeatIssue/>} />
-            <Route path="processing-issue" element={<ProcessingIssue/>} />
-            <Route path="finish-issue" element={<FinishIssue/>} />
-            <Route path="dispatch-stock" element={<DispatchStockIn/>} />
-            <Route path="account-stock-out" element={<AccountStockOut/>} />
+            <Route path="account-stock-in" element={<AccountStockIn />} />
+            <Route path="job-card" element={<JobCardIssue />} />
+            <Route path="grey-stock" element={<GreyStockIn />} />
+            <Route path="grey-table" element={<GreyTable />} />
+            <Route path="heat-issue" element={<HeatIssue />} />
+            <Route path="heat-issue-table" element={<HeatIssueTable />} />
+            <Route path="processing-issue" element={<ProcessingIssue />} />
+            <Route path="finish-issue" element={<FinishIssue />} />
+            <Route path="dispatch-stock" element={<DispatchStockIn />} />
+            <Route path="account-stock-out" element={<AccountStockOut />} />
             <Route path="profile-page" element={<ProfilePage />} />
-            <Route path="dispatch-data" element={<DispatchStockTable/>} />
-            <Route path="stock-out-data" element={<AccountStockOutTable/>} />
-            <Route path="testing-data" element={<Test/>} />
-
+            <Route path="dispatch-data" element={<DispatchStockTable />} />
+            <Route path="stock-out-data" element={<AccountStockOutTable />} />
+            <Route path="testing-data" element={<Test />} />
           </Route>
           <Route path="*" element={<NoPageFound />} />
         </Routes>

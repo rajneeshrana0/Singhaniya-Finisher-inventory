@@ -7,26 +7,42 @@ const PurchaseSchema = new mongoose.Schema(
       ref: "users",
       required: true,
     },
-    ProductID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "product",
-      required: true,
-    },
-    QuantityPurchased: {
-      type: Number,
-      required: true,
-    },
-    PurchaseDate: {
+    selectedOption: {
       type: String,
       required: true,
     },
-    TotalPurchaseAmount: {
+    challanNumber: {
+      type: String,
+      required: true,
+    },
+    quantity: {
+      type: String,
+      required: true,
+    },
+    kg: {
       type: Number,
+      required: true,
+    },
+    meter: {
+      type: Number,
+      required: true,
+    },
+    roll: {
+      type: Number,
+      required: true,
+    },
+    processTypes: {
+      type: [String],
+      required: true,
+    },
+    lotNumber: {
+      type: String,
       required: true,
     },
   },
   { timestamps: true }
 );
 
-const Purchase = mongoose.model("purchase", PurchaseSchema);
+
+const Purchase = mongoose.model("Purchase", PurchaseSchema);
 module.exports = Purchase;

@@ -16,7 +16,7 @@ const ProcessingIssue = () => {
   const fetchSubmittedData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/product/all",
+        "http://localhost:4000/api/purchase/getFullProcessData",
         { withCredentials: true }
       );
       setSubmittedData(response.data);
@@ -71,12 +71,15 @@ const ProcessingIssue = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center text-gray-800 shadow-lg bg-yellow-400 rounded-md p-6 hover:scale-105 transition-transform duration-300 w-full">
-      Processing Management
+        Processing Management
       </h1>
 
       <div className="mt-8 grid grid-cols-1 gap-6">
         <div>
-          <label htmlFor="lotNumber" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="lotNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
             Lot Number
           </label>
           <input
@@ -98,14 +101,20 @@ const ProcessingIssue = () => {
           onChange={handleToggleCompletion}
           disabled={!lotNumber}
         />
-        <label htmlFor="completed" className="ml-2 block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="completed"
+          className="ml-2 block text-sm font-medium text-gray-700"
+        >
           {lotNumber ? "Work Completed" : "Enter Lot Number first"}
         </label>
       </div>
 
       {completed && (
         <div className="mt-4">
-          <label htmlFor="completionDate" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="completionDate"
+            className="block text-sm font-medium text-gray-700"
+          >
             Completion Date
           </label>
           <input
@@ -140,6 +149,9 @@ const ProcessingIssue = () => {
                   Party Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Challan Number
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                   Quality
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
@@ -150,6 +162,12 @@ const ProcessingIssue = () => {
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                   Roll
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Process
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  Lot Number
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                   Completion Date
@@ -166,16 +184,23 @@ const ProcessingIssue = () => {
                     {dataItem.selectedOption}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.quantity}
+                    {dataItem.challanNumber}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.kg}
+                    {dataItem.quantity}
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{dataItem.kg}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dataItem.meter}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dataItem.roll}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.processTypes.join(", ")}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {dataItem.lotNumber}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {dataItem.completionDate || "-"}
