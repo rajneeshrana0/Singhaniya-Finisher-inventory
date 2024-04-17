@@ -7,6 +7,10 @@ const UserSchema = new mongoose.Schema({
     password: 'String',
     phoneNumber: 'Number',
     imageUrl: 'String',
+    check : {
+        type : 'String',
+        required : true
+    }
 });
 
 const User = mongoose.model("users", UserSchema);

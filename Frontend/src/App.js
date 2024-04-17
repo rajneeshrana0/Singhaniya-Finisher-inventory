@@ -2,7 +2,8 @@ import React from "react";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./dashboard/Dashboard";
+
+import Dashboard from "./pages/Dashboard";
 
 
 import "./index.css";
@@ -17,9 +18,8 @@ import { useEffect, useState } from "react";
 
 import AccountStockIn from "./account-in/AccountStockIn";
 import JobCardIssue from "./account-in/JobCardIssue";
-
-import AccountStockOut from "./account-out/AccountStockOut";
-import AccountStockOutTable from "./account-out/AccountStockOutTable";
+import AccountStockOut from "./account-in/AccountStockOut";
+import AccountStockOutTable from "./account-in/AccountStockOutTable";
 
 import GreyStockIn from "./grey-stock/GreyStockIn";
 import GreyTable from "./grey-stock/GreyTable"
@@ -36,6 +36,15 @@ import DispatchStockTable from "./dispatch/DispatchStockTable";
 import ProfilePage from "./pages/ProfilePage";
 import Test from "./pages/Test";
 
+// Admin Dashboard 
+
+import AccountStockOutData from "./dashboard/AccountStockOutData";
+import AcoountStockData from "./dashboard/AcoountStockData"
+import DispatchData from "./dashboard/DispatchData"
+import FinishData from "./dashboard/FinishData"
+import GreyStockData from "./dashboard/GreyStockData";
+import HeatData from "./dashboard/HeatData"
+import ProcessingData from "./dashboard/ProcessingData"
 const App = () => {
   const [user, setUser] = useState("");
   const [loader, setLoader] = useState(true);
@@ -93,11 +102,8 @@ const App = () => {
               </ProtectedWrapper>
             }
           >
-            <Route index element={<Dashboard />} />
-            {/* <Route path="/inventory" element={<Inventory />} />
-            <Route path="/purchase-details" element={<PurchaseDetails />} />
-            <Route path="/sales" element={<Sales />} />
-            <Route path="/manage-store" element={<Store />} /> */}
+            <Route  path ="dashboard-account"index element={<Dashboard />} />
+          
             <Route path="account-stock-in" element={<AccountStockIn />} />
             <Route path="job-card" element={<JobCardIssue />} />
             <Route path="grey-stock" element={<GreyStockIn />} />
@@ -111,7 +117,18 @@ const App = () => {
             <Route path="profile-page" element={<ProfilePage />} />
             <Route path="dispatch-data" element={<DispatchStockTable />} />
             <Route path="stock-out-data" element={<AccountStockOutTable />} />
-            <Route path="testing-data" element={<Test />} />
+
+           {/* Dashboard Rotes  */}
+           
+            <Route path="acc-stock-out-data" element={<AccountStockOutData />} />
+            <Route path="acc-stock-in-data" element={<AcoountStockData />} />
+            <Route path="dispatch-data" element={<DispatchData />} />
+            <Route path="finish-data" element={<FinishData />} />
+            <Route path="grey-data" element={<GreyStockData />} />
+            <Route path="heat-data" element={<HeatData />} />
+            <Route path="process-data" element={<ProcessingData />} />
+
+
           </Route>
           <Route path="*" element={<NoPageFound />} />
         </Routes>

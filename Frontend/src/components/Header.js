@@ -60,6 +60,10 @@ const handleSignOut = async () => {
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
+
+                  {/* need to add link into it */}
+
+                  <Link to="/dashboard-account">
                     <div className="flex-shrink-0">
                       <div className="flex justify-center items-center gap-2">
                         <img
@@ -72,9 +76,10 @@ const handleSignOut = async () => {
                         </span>
                       </div>
                     </div>
+                    </Link>
                   </div>
                   <div className="hidden md:block">
-                    <div className="ml-4 flex items-center md:ml-6">
+                    <div className="ml-4 flex items-center gap-8 md:ml-6">
                       <button
                         type="button"
                         className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

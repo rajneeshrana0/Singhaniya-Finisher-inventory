@@ -28,7 +28,30 @@ function Login() {
           notify();
           localStorage.setItem("user", JSON.stringify(data));
           authContext.signin(data._id, () => {
-            navigate("/");
+
+            if(data.check === "Admin"){
+              navigate("/dashboard-account");
+            }
+
+            if(data.check === "Account"){
+              navigate("/dashboard-account");
+            }
+           
+            if(data.check === "Heat"){
+              navigate("/dashboard-account");
+            }
+            if(data.check === "Finish"){
+              navigate("/dashboard-account");
+            }
+            if(data.check === "Process"){
+              navigate("/dashboard-account");
+            }
+            if(data.check === "Grey"){
+              navigate("/dashboard-account");
+            }
+            if(data.check === "Dispatch"){
+              navigate("/dashboard-account");
+            }
           });
         })
         .catch((err) => {
@@ -92,12 +115,7 @@ function Login() {
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Signin to your account
             </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              Or
-              <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                start your 14-day free trial
-              </span>
-            </p>
+            
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {/* <input type="hidden" name="remember" defaultValue="true" /> */}
@@ -173,13 +191,7 @@ function Login() {
                 </span>
                 Sign in
               </button>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                Or{" "}
-                <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Don't Have an Account, Please{" "}
-                  <Link to="/register"> Register now </Link>
-                </span>
-              </p>
+             
             </div>
           </form>
         </div>

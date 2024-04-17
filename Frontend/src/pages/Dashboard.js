@@ -7,7 +7,7 @@ import SideMenu from "../components/SideMenu";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 export const data = {
-  labels: ["Apple", "Knorr", "Shoop", "Green", "Purple", "Orange"],
+  labels: ["User", "Process", "Dispatch", "Heat", "Account", "Process"],
   datasets: [
     {
       label: "# of Votes",

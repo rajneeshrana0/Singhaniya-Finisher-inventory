@@ -1,3 +1,4 @@
+// Import required modules
 const express = require("express");
 const { main } = require("./models/index");
 const productRoute = require("./router/product");
@@ -10,23 +11,29 @@ const Product = require("./models/Product");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
+// Initialize express app
 const app = express();
 const PORT = 4000;
+
+// Middleware setup
 app.use(cookieParser());
 const secretKey = "check";
 main();
 app.use(express.json());
 
+
+
+// CORS setup
 const corsOptions = {
   origin: 'http://localhost:3000', // Replace with your frontend origin
   credentials: true, // Allow cookies to be sent with the request
 };
 app.use(cors(corsOptions));
 
+// Authentication middleware
 function authenticateUser(req, res, next) {
   let token = req.cookies.token;
 
-  // Check if token is present in headers (for Postman testing)
   if (!token && req.headers.authorization) {
     token = req.headers.authorization;
     if (token && token.startsWith('Bearer ')) {
@@ -50,20 +57,14 @@ function authenticateUser(req, res, next) {
   });
 }
 
-// Products API
+// Product, Store, Purchase, and Sales APIs
 app.use("/api/product", authenticateUser, productRoute);
-
-// Store API
 app.use("/api/store", authenticateUser, storeRoute);
-
-// Purchase API
 app.use("/api/purchase", authenticateUser, purchaseRoute);
-
-// Sales API
 app.use("/api/sales", authenticateUser, salesRoute);
 
-// ------------- Signin --------------
-let userAuthCheck = {};;
+// Signin endpoint
+let userAuthCheck = {};
 app.post("/api/login", async (req, res) => {
   console.log(req.body);
   try {
@@ -75,7 +76,7 @@ app.post("/api/login", async (req, res) => {
     if (user) {
       const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "1h" });
       res.cookie("token", token, { httpOnly: true, sameSite: "strict", secure: true });
-      res.json({ message: "Login successful" });
+      res.json({ message: "Login successful" , data :user }  ) ;
       userAuthCheck = user;
     } else {
       res.status(401).send("Invalid Credentials");
@@ -95,15 +96,14 @@ app.get("/api/login", (req, res) => {
   }
 });
 
+// Logout endpoint
 app.get("/api/logout", (req, res) => {
   // Clear the token cookie
   res.clearCookie("token");
   res.send("Logout successful");
 });
 
-// ------------------------------------
-
-// Registration API
+// Registration endpoint
 app.post("/api/register", (req, res) => {
   let registerUser = new User({
     firstName: req.body.firstName,
@@ -112,24 +112,27 @@ app.post("/api/register", (req, res) => {
     password: req.body.password,
     phoneNumber: req.body.phoneNumber,
     imageUrl: req.body.imageUrl,
+    check: req.body.check
   });
+
+  console.log(req.body.check)
 
   registerUser
     .save()
     .then((result) => {
       res.status(200).send(result);
-      alert("Signup Successful");
+      console.log("Signup Successful");
     })
     .catch((err) => console.log("Signup: ", err));
-  console.log("request: ", req.body);
-});
+  });
 
+// Test endpoint
 app.get("/testget", async (req, res) => {
-  const result = await Product.findOne({ _id: '6429979b2e5434138eda1564' })
-  res.json(result)
+  const result = await Product.findOne({ _id: '6429979b2e5434138eda1564' });
+  res.json(result);
 });
 
-// Here we are listening to the server
+// Start the server
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
 });
