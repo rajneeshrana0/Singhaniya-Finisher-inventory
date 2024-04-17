@@ -4,6 +4,7 @@ const productRoute = require("./router/product");
 const storeRoute = require("./router/store");
 const purchaseRoute = require("./router/purchase");
 const salesRoute = require("./router/sales");
+const accountRoute = require("./router/accountout");
 const cors = require("cors");
 const User = require("./models/users");
 const Product = require("./models/Product");
@@ -61,6 +62,9 @@ app.use("/api/purchase", authenticateUser, purchaseRoute);
 
 // Sales API
 app.use("/api/sales", authenticateUser, salesRoute);
+
+//account api 
+app.use("/api/account", authenticateUser, accountRoute);
 
 // ------------- Signin --------------
 let userAuthCheck = {};;

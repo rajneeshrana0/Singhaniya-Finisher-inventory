@@ -27,7 +27,9 @@ import GreyTable from "./grey-stock/GreyTable"
 import HeatIssue from "./pages/HeatIssue";
 import HeatIssueTable from './pages/HeatIssueTable'
 import ProcessingIssue from "./pages/ProcessingIssue";
+import ProcessingIssueTable from "./pages/ProcessingTable";
 import FinishIssue from "./pages/FinishIssue";
+import FinishIssueTable from "./pages/FinishIssueTable";
 
 
 import DispatchStockIn from "./dispatch/DispatchStockIn";
@@ -105,7 +107,12 @@ const App = () => {
             <Route path="heat-issue" element={<HeatIssue />} />
             <Route path="heat-issue-table" element={<HeatIssueTable />} />
             <Route path="processing-issue" element={<ProcessingIssue />} />
+            <Route
+              path="processing-issue-table"
+              element={<ProcessingIssueTable />}
+            />
             <Route path="finish-issue" element={<FinishIssue />} />
+            <Route path="finish-issue-table" element={<FinishIssueTable />} />
             <Route path="dispatch-stock" element={<DispatchStockIn />} />
             <Route path="account-stock-out" element={<AccountStockOut />} />
             <Route path="profile-page" element={<ProfilePage />} />

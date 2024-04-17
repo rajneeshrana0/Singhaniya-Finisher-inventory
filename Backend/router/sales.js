@@ -5,7 +5,13 @@ const sales = require("../controller/sales");
 // Add Sales
 app.post("/add", sales.addSales);
 
+
+
 app.get("/data", sales.getSubmittedData);
+
+app.get("/data/full", sales.getSubmittedDataFullProcess);
+
+app.get("/data/finish", sales.getSubmittedDataFinishProcess);
 
 module.exports = app;
 

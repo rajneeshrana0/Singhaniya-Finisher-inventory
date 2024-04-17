@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 function SideMenu() {
   const localStorageData = JSON.parse(localStorage.getItem("user"));
+  
 
   return (
     <div className="h-full flex-col justify-between  bg-white hidden lg:flex ">
@@ -126,7 +127,10 @@ function SideMenu() {
               <Link to="/heat-issue-table">
                 <div className="flex items-center gap-2">
                   <img alt="store-icon" src={require("../assets/hi.jpeg")} />
-                  <span className="text-sm font-medium"> Heatset Issue Table </span>
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Heatset Issue Table{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -146,10 +150,36 @@ function SideMenu() {
           </details>
           <details className="group [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <Link to="/processing-issue-table">
+                <div className="flex items-center gap-2">
+                  <img alt="store-icon" src={require("../assets/pi.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Processing Issue Table{" "}
+                  </span>
+                </div>
+              </Link>
+            </summary>
+          </details>
+          <details className="group [&_summary::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/finish-issue">
                 <div className="flex items-center gap-2">
                   <img alt="store-icon" src={require("../assets/fi.jpeg")} />
                   <span className="text-sm font-medium"> Finish Issue </span>
+                </div>
+              </Link>
+            </summary>
+          </details>
+          <details className="group [&_summary::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <Link to="/finish-issue-table">
+                <div className="flex items-center gap-2">
+                  <img alt="store-icon" src={require("../assets/fi.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Finish Issue Table{" "}
+                  </span>
                 </div>
               </Link>
             </summary>
@@ -161,7 +191,20 @@ function SideMenu() {
                   <img alt="store-icon" src={require("../assets/dis.jpeg")} />
                   <span className="text-sm font-medium">
                     {" "}
-                    Dispatch Stock In{" "}
+                    Dispatch Stock Out{" "}
+                  </span>
+                </div>
+              </Link>
+            </summary>
+          </details>
+          <details className="group [&_summary::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <Link to="/dispatch-data">
+                <div className="flex items-center gap-2">
+                  <img alt="store-icon" src={require("../assets/aso.jpeg")} />
+                  <span className="text-sm font-medium">
+                    {" "}
+                    Dispatch Stock Table{" "}
                   </span>
                 </div>
               </Link>
@@ -193,21 +236,8 @@ function SideMenu() {
               </Link>
             </summary>
           </details>
-          <details className="group [&_summary::-webkit-details-marker]:hidden">
-            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-              <Link to="/dispatch-data">
-                <div className="flex items-center gap-2">
-                  <img alt="store-icon" src={require("../assets/aso.jpeg")} />
-                  <span className="text-sm font-medium">
-                    {" "}
-                    Dispatch Stock Table{" "}
-                  </span>
-                </div>
-              </Link>
-            </summary>
-          </details>
 
-          <details className="group [&_summary::-webkit-details-marker]:hidden">
+          {/* <details className="group [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
               <Link to="/testing-data">
                 <div className="flex items-center gap-2">
@@ -216,7 +246,7 @@ function SideMenu() {
                 </div>
               </Link>
             </summary>
-          </details>
+          </details> */}
         </nav>
       </div>
 
