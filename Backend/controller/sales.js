@@ -17,7 +17,6 @@ const addSales = async (req, res) => {
         .json({ message: "Purchase data not found for the given lot number" });
     }
 
-    // Get current date and time
     const currentDate = new Date();
 
     const newSales = new Sales({
@@ -30,10 +29,18 @@ const addSales = async (req, res) => {
       meter: purchaseData.meter,
       roll: purchaseData.roll,
       processTypes: purchaseData.processTypes,
-      completionDate: currentDate, 
+      completionDate: currentDate,
     });
 
     const savedSales = await newSales.save();
+
+  
+   const updateResult = await Purchase.findOneAndUpdate(
+     { lotNumber: lotNumber },
+     { $set: { status: "completed" } }
+   );
+
+   console.log("Update Result:", updateResult);
 
     res.status(201).json(savedSales);
   } catch (error) {
@@ -43,16 +50,63 @@ const addSales = async (req, res) => {
 };
 
 
+
+
 const getSubmittedData = async (req, res) => {
   try {
-    // Fetch all submitted sales data
-    const submittedData = await Sales.find();
+    const allSubmittedData = await Sales.find();
 
-    res.status(200).json(submittedData);
+
+    const halfProcessedData = allSubmittedData.filter((data) =>
+      data.processTypes.includes("half")
+    );
+
+    res.status(200).json(halfProcessedData);
   } catch (error) {
     console.error("Error fetching submitted data:", error);
     res.status(500).json({ message: "Server Error" });
   }
 };
 
-module.exports = { addSales, getSubmittedData };
+
+const getSubmittedDataFullProcess = async (req, res) => {
+  try {
+    const allSubmittedData = await Sales.find();
+
+ 
+    const halfProcessedData = allSubmittedData.filter((data) =>
+      data.processTypes.includes("full")
+    );
+
+    res.status(200).json(halfProcessedData);
+  } catch (error) {
+    console.error("Error fetching submitted data:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getSubmittedDataFinishProcess = async (req, res) => {
+  try {
+    const allSubmittedData = await Sales.find();
+
+ 
+    const halfProcessedData = allSubmittedData.filter((data) =>
+      data.processTypes.includes("finish")
+    );
+
+    res.status(200).json(halfProcessedData);
+  } catch (error) {
+    console.error("Error fetching submitted data:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+
+
+
+module.exports = {
+  addSales,
+  getSubmittedData,
+  getSubmittedDataFullProcess,
+  getSubmittedDataFinishProcess,
+};

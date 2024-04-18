@@ -5,6 +5,7 @@ const productRoute = require("./router/product");
 const storeRoute = require("./router/store");
 const purchaseRoute = require("./router/purchase");
 const salesRoute = require("./router/sales");
+const accountRoute = require("./router/accountout");
 const cors = require("cors");
 const User = require("./models/users");
 const Product = require("./models/Product");
@@ -63,8 +64,13 @@ app.use("/api/store", authenticateUser, storeRoute);
 app.use("/api/purchase", authenticateUser, purchaseRoute);
 app.use("/api/sales", authenticateUser, salesRoute);
 
-// Signin endpoint
-let userAuthCheck = {};
+
+//account api 
+app.use("/api/account", authenticateUser, accountRoute);
+
+// ------------- Signin --------------
+let userAuthCheck = {};;
+
 app.post("/api/login", async (req, res) => {
   console.log(req.body);
   try {

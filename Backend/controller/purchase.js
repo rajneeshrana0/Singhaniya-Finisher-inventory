@@ -45,7 +45,8 @@ const addPurchase = async (req, res) => {
       meter: meter,
       roll: roll,
       processTypes: processTypes,
-      lotNumber: lotNumber, 
+      lotNumber: lotNumber,
+      status: "pending",
     });
 
     const result = await newPurchase.save();
