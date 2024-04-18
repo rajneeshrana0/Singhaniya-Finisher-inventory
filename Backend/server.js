@@ -65,8 +65,6 @@ app.use("/api/purchase", authenticateUser, purchaseRoute);
 app.use("/api/sales", authenticateUser, salesRoute);
 
 
-// Signin endpoint
-let userAuthCheck = {};
 //account api 
 app.use("/api/account", authenticateUser, accountRoute);
 
