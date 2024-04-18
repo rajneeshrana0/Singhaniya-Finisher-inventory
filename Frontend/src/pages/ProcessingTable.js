@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function AccountStockOutTable() {
+function ProcessingTable() {
   const [submittedData, setSubmittedData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,7 +10,7 @@ function AccountStockOutTable() {
   const fetchSubmittedData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/account/all",
+        "http://localhost:4000/api/sales/data/full",
         {
           withCredentials: true,
         }
@@ -25,6 +25,11 @@ function AccountStockOutTable() {
   useEffect(() => {
     fetchSubmittedData();
   }, []);
+
+  const formatCompletionDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString() + " " + date.toLocaleTimeString();
+  };
 
   const filteredData = submittedData.filter((dataItem) =>
     dataItem.selectedOption.toLowerCase().includes(searchQuery.toLowerCase())
@@ -70,9 +75,6 @@ function AccountStockOutTable() {
                     Quality
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                    Lot Number
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                     Kg
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase">
@@ -80,6 +82,15 @@ function AccountStockOutTable() {
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase">
                     Roll
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Process
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Lot Number
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Completion Date & Time
                   </th>
                 </tr>
               </thead>
@@ -99,9 +110,6 @@ function AccountStockOutTable() {
                       {dataItem.quantity}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {dataItem.lotNumber}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
                       {dataItem.kg}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -110,32 +118,41 @@ function AccountStockOutTable() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       {dataItem.roll}
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.processTypes.join(", ")}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.lotNumber}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {formatCompletionDate(dataItem.completionDate)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <ul className="flex justify-center my-4">
+              {Array.from({
+                length: Math.ceil(filteredData.length / itemsPerPage),
+              }).map((_, index) => (
+                <li
+                  key={index}
+                  onClick={() => paginate(index + 1)}
+                  className={`px-3 py-1 mx-1 cursor-pointer ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-300"
+                  }`}
+                >
+                  {index + 1}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
-        <ul className="flex justify-center my-4">
-          {Array.from({
-            length: Math.ceil(filteredData.length / itemsPerPage),
-          }).map((_, index) => (
-            <li
-              key={index}
-              onClick={() => paginate(index + 1)}
-              className={`px-3 py-1 mx-1 cursor-pointer ${
-                currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-300"
-              }`}
-            >
-              {index + 1}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
 }
 
-export default AccountStockOutTable;
+export default ProcessingTable;

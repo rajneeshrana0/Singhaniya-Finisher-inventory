@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const StoreSchema = new mongoose.Schema(
+const AccountOutSchema = new mongoose.Schema(
   {
     userID: {
       type: mongoose.Schema.Types.ObjectId,
@@ -31,10 +31,6 @@ const StoreSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    karigar: {
-      type: String,
-      required: true,
-    },
     lotNumber: {
       type: String,
       required: true,
@@ -43,5 +39,5 @@ const StoreSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Store = mongoose.model("store", StoreSchema);
-module.exports = Store;
+const Account = mongoose.model("account", AccountOutSchema);
+module.exports = Account;

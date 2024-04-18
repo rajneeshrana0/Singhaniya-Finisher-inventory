@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const FinishIssue = () => {
   const [completed, setCompleted] = useState(false);
   const [completionDate, setCompletionDate] = useState("");
-  const [lotNumber, setLotNumber] = useState("");
-  const [partyName, setPartyName] = useState("");
-  const [challanNumber, setChallanNumber] = useState("");
+  const [lotOptions, setLotOptions] = useState([]);
+  const [selectedLot, setSelectedLot] = useState("");
   const [submittedData, setSubmittedData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     fetchSubmittedData();
@@ -16,18 +19,25 @@ const FinishIssue = () => {
   const fetchSubmittedData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/purchase/getfinishProcessData",
+        "http://localhost:4000/api/purchase/getFinishProcessData",
         { withCredentials: true }
       );
-      setSubmittedData(response.data);
+
+      const pendingData = response.data.filter(
+        (item) => item.status === "pending"
+      );
+
+      const lotNumbers = pendingData.map((item) => item.lotNumber);
+      setLotOptions(lotNumbers);
+      setSubmittedData(pendingData);
     } catch (error) {
       console.error("Error fetching submitted data:", error);
     }
   };
 
   const handleToggleCompletion = () => {
-    if (!lotNumber) {
-      alert("Please enter Lot Number first.");
+    if (!selectedLot) {
+      alert("Please select a Lot Number first.");
       return;
     }
 
@@ -39,32 +49,54 @@ const FinishIssue = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (!lotNumber) {
-      alert("Please enter Lot Number first.");
+  const handleSubmit = async () => {
+    if (!selectedLot) {
+      toast.error("Please select a Lot Number first.");
       return;
     }
 
-    if (completed && completionDate) {
-      const newDataItem = {
-        selectedOption: partyName,
-        quantity: "",
-        kg: "",
-        meter: "",
-        roll: "",
-        completionDate: completionDate,
-      };
-      setSubmittedData([...submittedData, newDataItem]);
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/sales/add",
+        { lotNumber: selectedLot },
+        { withCredentials: true }
+      );
 
-      setLotNumber("");
-      setPartyName("");
-      setChallanNumber("");
-      setCompleted(false);
-      setCompletionDate("");
-    } else {
-      alert("Please mark the work as completed before submitting.");
+      if (response.status === 201) {
+        toast.success("Lot number submitted successfully!");
+
+        const newDataItem = {
+          selectedOption: "",
+          quantity: "",
+          kg: "",
+          meter: "",
+          roll: "",
+          completionDate: completionDate,
+        };
+        setSubmittedData([...submittedData, newDataItem]);
+
+        setSelectedLot("");
+        setCompleted(false);
+        setCompletionDate("");
+      } else {
+        toast.error("Error submitting lot number. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting lot number:", error);
+
+      toast.error("Error submitting lot number. Please try again.");
     }
   };
+
+  const filteredData = submittedData.filter((dataItem) =>
+    dataItem.selectedOption.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -80,13 +112,19 @@ const FinishIssue = () => {
           >
             Lot Number
           </label>
-          <input
-            type="text"
+          <select
             id="lotNumber"
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-            value={lotNumber}
-            onChange={(e) => setLotNumber(e.target.value)}
-          />
+            value={selectedLot}
+            onChange={(e) => setSelectedLot(e.target.value)}
+          >
+            <option value="">Select a Lot Number</option>
+            {lotOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -97,13 +135,13 @@ const FinishIssue = () => {
           className="h-6 w-6 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
           checked={completed}
           onChange={handleToggleCompletion}
-          disabled={!lotNumber}
+          disabled={!selectedLot}
         />
         <label
           htmlFor="completed"
           className="ml-2 block text-sm font-medium text-gray-700"
         >
-          {lotNumber ? "Work Completed" : "Enter Lot Number first"}
+          {selectedLot ? "Work Completed" : "Select Lot Number first"}
         </label>
       </div>
 
@@ -137,75 +175,109 @@ const FinishIssue = () => {
 
       <div className="mt-12 w-full">
         <h2 className="text-lg font-semibold mb-4">Finish Issue</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
-            <thead className="bg-blue-800 text-white">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Party Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Challan Number
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Quality
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Kg
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Meter
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Roll
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Process
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Lot Number
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase">
-                  Completion Date
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {submittedData.map((dataItem, index) => (
-                <tr
-                  key={index}
-                  className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.selectedOption}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.challanNumber}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.quantity}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">{dataItem.kg}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.meter}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.roll}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.processTypes.join(", ")}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.lotNumber}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {dataItem.completionDate || "-"}
-                  </td>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by Party Name..."
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+        />
+        {filteredData.length === 0 ? (
+          <div className="text-center">
+            <p
+              className="text-gray-800 font-semibold text-lg"
+              style={{ color: "#4A90E2" }}
+            >
+              Sorry, no data available at the moment.
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+              <thead className="bg-blue-800 text-white">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Party Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Challan Number
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Quality
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Kg
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Meter
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Roll
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Process
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                    Lot Number
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {currentItems.map((dataItem, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.selectedOption}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.challanNumber}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.quantity}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.kg}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.meter}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.roll}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {Array.isArray(dataItem.processTypes)
+                        ? dataItem.processTypes.join(", ")
+                        : "-"}
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {dataItem.lotNumber}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <ul className="flex justify-center my-4">
+          {Array.from({
+            length: Math.ceil(filteredData.length / itemsPerPage),
+          }).map((_, index) => (
+            <li
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`px-3 py-1 mx-1 cursor-pointer ${
+                currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300"
+              }`}
+            >
+              {index + 1}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
