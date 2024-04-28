@@ -28,8 +28,7 @@ function Modal({ isOpen, onClose, data }) {
           ...values,
           selectedOption: data.selectedOption,
           challanNumber: data.challanNumber,
-          quality: data.quality,
-          selectedQualities: selectedQualities.map((quality) => quality.value),
+          quantity: data.quantity,
         },
         {
           withCredentials: true,
@@ -37,13 +36,12 @@ function Modal({ isOpen, onClose, data }) {
       );
       console.log("Form data submitted:", response.data);
       toast.success("Grey successfully added");
-      onClose();
+      onClose(); 
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Error adding Grey");
     }
   };
-  
 
 
   const handleAddQuality = () => {
