@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     email: 'String',
     password: 'String',
     phoneNumber: 'Number',
-    imageUrl: 'String',
+    // imageUrl: 'String',
     check : {
         type : 'String',
         required : true

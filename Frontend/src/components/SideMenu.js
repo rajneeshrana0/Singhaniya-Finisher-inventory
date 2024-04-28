@@ -29,11 +29,11 @@ function SideMenu() {
   // Define menu items based on user role
   const menuItems = {
     Account: [
-      { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
-      { to: "/account-stock-in", label: "Account Stock IN", icon: require("../assets//aso.jpeg") },
-      { to: "/job-card", label: " Account Stock Table", icon: require("../assets//aso.jpeg") },
-      { to: "/account-stock-out", label: "Account Stock Out", icon: require("../assets//aso.jpeg") },
-      { to: "/stock-out-data", label: "Account Stock Out Table", icon: require("../assets//aso.jpeg") },
+      { to: "dashboard-account", label: "Dashboard", icon: require("../assets/home.png") },
+      { to: "/account-stock-in", label: "Stock In", icon: require("../assets//stockIn.png") },
+      { to: "/job-card", label: "Stock In Table", icon: require("../assets//stockInTable.png") },
+      { to: "/account-stock-out", label: "Stock Out ", icon: require("../assets//stockOut.png") },
+      { to: "/stock-out-data", label: "Stock Out Table", icon: require("../assets//stockOutta.png") },
 
     ],
     Dispatch: [
@@ -56,7 +56,7 @@ function SideMenu() {
     ],
     Finish: [
       { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
-      { to: "/finish-issue", label: "Finish Issue", icon: require("../assets//aso.jpeg") },
+      { to: "/finish-issue", label: "Finish Issue", icon: require("../assets/aso.jpeg") },
       { to: "/admin/settings", label: "Finish Issue Table", icon: require("../assets//aso.jpeg") },
     
     ],
@@ -85,19 +85,19 @@ function SideMenu() {
   const userMenuItems = menuItems[userRole] || [];
 
   return (
-    <div className="h-screen  flex-col justify-between bg-white hidden lg:flex shadow-2xl">
+    <div className="h-full p-4 w-[265px] mb-4 flex-col justify-between bg-nav hidden lg:flex shadow-md shadow-gray-600 font-login">
     
-      <div className="px-4 py-6 mt-8">
-        <nav aria-label="Main Nav" className="mt-4 flex flex-col space-y-1">
+      <div className="pt-4">
+        <nav aria-label="Main Nav" className="flex flex-col space-y-1">
           {userMenuItems.map((menuItem, index) => (
             <Link
               key={index}
               to={menuItem.to}
-              className="flex items-center gap-2 rounded-lg hover:bg-blue-400  px-4 py-2 hover:text-white-700"
+              className="flex items-center gap-2 rounded-lg hover:bg-login hover:text-white px-4 py-2"
             >
               <img alt={menuItem.label} src={menuItem.icon}
-              className="flex items-center gap-2" />
-              <span className="text-sm font-bold  ">{menuItem.label}</span>
+              className="flex items-center gap-2 " />
+              <span className="text-[16px] font-medium hover:bg-login hover:text-white font-login">{menuItem.label}</span>
             </Link>
           ))}
         </nav>
@@ -105,27 +105,30 @@ function SideMenu() {
 
       {/* Profile section */}
 
-      <div className=" fixed inset-x-0 bottom-0 border-t border-gray-100">
+      {/* <div className=" fixed inset-x-0 bottom-0">
         <Link to="/profile-page">
-          <div className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
-            <img
-              alt="Profile"
-              src={localStorageData.imageUrl}
-              className="h-10 w-10 rounded-full object-cover"
-            />
-
-            <div>
-              <p className="text-xs">
-                <strong className="block font-medium">
+          <div className="flex items-center gap-2 bg-foooter_bg p-4 hover:bg-gray-50">
+            <div className="font-semibold font-footer text-[14px]">
+              <p className="text-xs ">
+                <strong className="block pl-[80px] ">
                   {localStorageData.firstName + " " + localStorageData.lastName}
                 </strong>
 
-                <span> {localStorageData.email} </span>
+                <span className="text-footer_red pl-[120px]">
+                  Log Out 
+                  </span>
               </p>
             </div>
+
+            <img
+              alt="Profile"
+              // src={localStorageData.imageUrl}
+              src={require("../assets/footer_img.png")}
+              className="h-[48px] w-[48px] rounded-full object-cover"
+            />
           </div>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
