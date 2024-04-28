@@ -24,68 +24,61 @@ export default function Header() {
   const authContext = useContext(AuthContext);
   const localStorageData = JSON.parse(localStorage.getItem("user"));
 
-const handleSignOut = async () => {
-  try {
-    const response = await fetch("http://localhost:4000/api/logout", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
-    if (response.ok) {
-      toast("Logout Successful!", { autoClose: 2000 }); 
-      setTimeout(() => {
-        localStorage.removeItem("user");
-        authContext.signout();
-      }, 2000);
-    } else {
-      console.error("Logout failed:", response.statusText);
+  const handleSignOut = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/logout", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (response.ok) {
+        toast("Logout Successful!", { autoClose: 2000 });
+        setTimeout(() => {
+          localStorage.removeItem("user");
+          authContext.signout();
+        }, 2000);
+      } else {
+        console.error("Logout failed:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
     }
-  } catch (error) {
-    console.error("Error during logout:", error);
-  }
-};
-
-
-
+  };
 
   return (
     <>
       <ToastContainer />
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-nav p-1 shadow-md shadow-gray-600">
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                  <div className="flex items-center">
-
-                  {/* need to add link into it */}
-
+              <div className="ml-[10px]">
+                <div className=" flex items-center justify-between ">
                   <Link to="/dashboard-account">
-                    <div className="flex-shrink-0">
-                      <div className="flex justify-center items-center gap-2">
-                        <img
-                          className="h-8 w-8"
-                          src={require("../assets/logo.png")}
-                          alt="Inventory Management System"
-                        />
-                        <span className="font-bold text-white italic">
-                          SINGHANIA FINISHERS
-                        </span>
-                      </div>
+                    <div className="flex gap-4">
+                      <img
+                        className="h-[41px] w-[40px]"
+                        src={require("../assets/Slogo2.png")}
+                        alt="Inventory Management System"
+                      />
+                      <p className="items-center mt-3">SINGHANIA FINISHERS</p>
+                    
                     </div>
-                    </Link>
+                  </Link>
+                  
+                  <div className="flex items-center">
+                    {/* need to add link into it */}
                   </div>
                   <div className="hidden md:block">
-                    <div className="ml-4 flex items-center gap-8 md:ml-6">
+                    <div className="flex items-center gap-8 md:ml-6">
                       <button
                         type="button"
                         className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       >
                         <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        
                       </button>
 
                       {/* Profile dropdown */}
@@ -93,11 +86,33 @@ const handleSignOut = async () => {
                         <div>
                           <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             <span className="sr-only">Open user menu</span>
+                            <div className=" flex gap-[24px] items-center justify-center">
                             <img
-                              className="h-8 w-8 rounded-full"
-                              src={localStorageData.imageUrl}
+                              className="h-[24px] w-[24px]"
+                              src={require("../assets/searchicon.png")}
+                              alt="Inventory Management System"
+                            />
+                            <img
+                              className="h-[24px] w-[24px]"
+                              src={require("../assets/commentIcon.png")}
+                              alt="Inventory Management System"
+                            />
+                            <img
+                              className="h-[24px] w-[24px]"
+                              src={require("../assets/notificationIcon.png")}
+                              alt="Inventory Management System"
+                            />
+                              <div>
+                              <p className="font-semibold font-footer text-[14px]">Rohit</p>
+                              <p className="font-medium font-footer text-[12px] text-footer_red" >Log Out</p>
+                              </div>
+
+                              <img
+                              className="h-[48px] w-[48px] rounded-full"
+                              src={require("../assets/footer_img.png")}
                               alt="profile"
                             />
+                            </div>
                           </Menu.Button>
                         </div>
                         <Transition
@@ -130,7 +145,7 @@ const handleSignOut = async () => {
                       </Menu>
                     </div>
                   </div>
-                  <div className="-mr-2 flex md:hidden">
+                  <div className="mr-2 flex md:hidden">
                     {/* Mobile menu button */}
                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open main menu</span>
@@ -178,6 +193,7 @@ const handleSignOut = async () => {
                         src={localStorageData.imageUrl}
                         alt="profile"
                       />
+                      6
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">
@@ -190,10 +206,7 @@ const handleSignOut = async () => {
                     <button
                       type="button"
                       className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                    ></button>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (

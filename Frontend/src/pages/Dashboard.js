@@ -272,12 +272,10 @@ function Dashboard() {
                 {" "}
                 {stores.length}{" "}
               </span>
-
-              {/* <span className="text-xs text-gray-500"> from 0 </span> */}
             </p>
           </div>
         </article>
-        <div className="flex justify-around bg-white rounded-lg py-8 col-span-full justify-center">
+        <div className="flex justify-around bg-white rounded-lg py-8 col-span-full">
           <div>
             <Chart
               options={chart.options}

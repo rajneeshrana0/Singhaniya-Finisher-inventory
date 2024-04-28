@@ -13,7 +13,7 @@ function Layout() {
         <div className="lg:w-1/6">
           <SideMenu />
         </div>
-        <div className="lg:w-5/6 p-4">
+        <div className="lg:w-5/6 p-4 bg-white">
           <Outlet />
         </div>
       </div>

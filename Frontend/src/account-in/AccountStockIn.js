@@ -16,7 +16,6 @@ const Dropdown = () => {
   const [meter, setMeter] = useState("");
   const [roll, setRoll] = useState("");
   const [lotNumber, setLotNumber] = useState("");
- 
 
   const options = ["Rajneesh Rana", "Liza Ahuja", "Nitish Kumar"];
   const toggleDropdown = () => {
@@ -28,60 +27,58 @@ const Dropdown = () => {
     setIsOpen(false);
   };
 
-const notify = () => toast("Data Saved!");
-const handleSubmit = async () => {
-  try {
-    if (
-      !selectedOption ||
-      !challanNumber ||
-      !quantity ||
-      !kg ||
-      !meter ||
-      !roll
-    ) {
-      toast.error("Please fill in all fields.");
-      return; 
-    }
-    const response = await axios.post(
-      "http://localhost:4000/api/product/add",
-      {
-        selectedOption,
-        challanNumber,
-        quantity,
-        kg,
-        meter,
-        roll,
-      },
-      {
-        withCredentials: true,
+  const notify = () => toast("Data Saved!");
+  const handleSubmit = async () => {
+    try {
+      if (
+        !selectedOption ||
+        !challanNumber ||
+        !quantity ||
+        !kg ||
+        !meter ||
+        !roll
+      ) {
+        toast.error("Please fill in all fields.");
+        return;
       }
-    );
+      const response = await axios.post(
+        "http://localhost:4000/api/product/add",
+        {
+          selectedOption,
+          challanNumber,
+          quantity,
+          kg,
+          meter,
+          roll,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-    console.log(response);
-    notify();
-    console.log("Data saved successfully:", response.data);
+      console.log(response);
+      notify();
+      console.log("Data saved successfully:", response.data);
 
-
-    setSelectedOption("");
-    setChallanNumber("");
-    setQuantity("");
-    setKg("");
-    setMeter("");
-    setRoll("");
-  } catch (error) {
-    console.error("Error saving data:", error);
-    toast.error("Error saving data. Please try again later.");
-  }
-};
+      setSelectedOption("");
+      setChallanNumber("");
+      setQuantity("");
+      setKg("");
+      setMeter("");
+      setRoll("");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      toast.error("Error saving data. Please try again later.");
+    }
+  };
 
   // const dataToShow = submittedData.filter(dataItem => dataItem.selectedOption !== selectedOption);
-
 
   return (
     <>
       <ToastContainer />
-      <div className="flex flex-col items-center">
-        <h1 className="text-5xl font-bold text-center text-gray-800 shadow-lg bg-yellow-400 rounded-md p-6  transition-transform duration-300 w-full">
+      <div className="flex flex-col items-center overflow-hidden">
+        <h1 className="text-[64px] font-medium font-login text-center text-white shadow-lg bg-gray rounded-md p-6  transition-transform duration-300 w-[1370px] h-[117px]">
           Account Stock In
         </h1>
         <div className="form-data-start w-full max-w-md mt-6">
@@ -179,100 +176,121 @@ const handleSubmit = async () => {
             </div>
           )}
           {/* Input Fields */}
-          <div className="mt-4">
-            <label
-              htmlFor="challanNumber"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Enter Challan Number
-            </label>
-            <input
-              type="text"
-              id="challanNumber"
-              name="challanNumber"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Enter Challan Number"
-              value={challanNumber}
-              onChange={(e) => setChallanNumber(e.target.value)}
-            />
+          <div className="border-login border-[1px] rounded-xl overflow-hidden">
+            <div className="mt-4 ">
+              <label
+                htmlFor="challanNumber"
+                className="block text-gray-700 ml-4 font-login text-lg"
+              >
+                Challan Number
+              </label>
+              <input
+                type="text"
+                id="challanNumber"
+                name="challanNumber"
+                className="mt-4 ml-4 mb-4 block w-[300px] placeholder:font-login text-[24px] border-gray-300 rounded-xs shadow-black shadow-sm focus:ring-darkgray focus:border-darkgray sm:text-sm "
+                placeholder="Your Answer"
+                value={challanNumber}
+                onChange={(e) => setChallanNumber(e.target.value)}
+              />
+              <div className="bg-darkgray h-4 w-full overflow-hidden"></div>
+            </div>
           </div>
-          <div className="mt-4">
-            <label
-              htmlFor="quantity"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Enter Quantity
-            </label>
-            <input
-              type="text"
-              id="quantity"
-              name="quantity"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Enter Quantity"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            />
+
+          <div className="border-login border-[1px] rounded-xl overflow-hidden mt-8">
+            <div className="mt-4">
+              <label
+                htmlFor="quantity"
+                className="block ml-4 font-login text-lg text-gray-700"
+              >
+                Quality
+              </label>
+              <input
+                type="text"
+                id="quantity"
+                name="quantity"
+                className="mt-4 block mb-4 ml-4 w-[300px] rounded-xs shadow-black shadow-sm border-gray-300 rounded-xs focus:ring-darkgray focus:border-darkgray sm:text-sm placeholder:font-login text-[24px]"
+                placeholder="Your answer"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+              <div className="bg-darkgray h-4 w-full "></div>
+            </div>
           </div>
-          <div className="mt-4">
-            <label
-              htmlFor="kg"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Kg
-            </label>
-            <input
-              type="text"
-              id="kg"
-              name="kg"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Kg"
-              value={kg}
-              onChange={(e) => setKg(e.target.value)}
-            />
+
+          <div className="border-login border-[1px] rounded-xl overflow-hidden mt-8">
+            <div className="mt-4">
+              <label
+                htmlFor="kg"
+                className="block ml-4 text-lg font-login text-gray-700"
+              >
+                KG
+              </label>
+              <input
+                type="text"
+                id="kg"
+                name="kg"
+                className="mt-4 mb-4 ml-4 block w-[300px] border-gray-300 rounded-xs focus:ring-darkgray focus:border-darkgray sm:text-sm placeholder:font-login text-[24px]  shadow-black shadow-sm"
+                placeholder="Your answer"
+                value={kg}
+                onChange={(e) => setKg(e.target.value)}
+              />
+              <div className="bg-darkgray h-4 w-full"></div>
+            </div>
           </div>
-          <div className="mt-4">
-            <label
-              htmlFor="meter"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Meter
-            </label>
-            <input
-              type="text"
-              id="meter"
-              name="meter"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Meter"
-              value={meter}
-              onChange={(e) => setMeter(e.target.value)}
-            />
+
+          <div className="border-login border-[1px] rounded-xl overflow-hidden mt-8">
+            <div className="mt-4">
+              <label
+                htmlFor="meter"
+                className="block text-lg ml-4 font-login text-gray-700"
+              >
+                Meter
+              </label>
+              <input
+                type="text"
+                id="meter"
+                name="meter"
+                className="mt-4 mb-4 ml-4 block w-[300px] border-gray-300 rounded-xs placeholder:font-login text-[24px] focus:ring-darkgray focus:border-darkgray sm:text-sm shadow-black shadow-sm"
+                placeholder="Your answer"
+                value={meter}
+                onChange={(e) => setMeter(e.target.value)}
+              />
+              <div className="bg-darkgray h-4 w-full "></div>
+            </div>
           </div>
-          <div className="mt-4">
-            <label
-              htmlFor="roll"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Roll
-            </label>
-            <input
-              type="text"
-              id="roll"
-              name="roll"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Roll"
-              value={roll}
-              onChange={(e) => setRoll(e.target.value)}
-            />
+
+          <div className="border-login border-[1px] rounded-xl overflow-hidden mt-8">
+            <div className="mt-4">
+              <label
+                htmlFor="roll"
+                className="block text-lg font-login ml-4 text-gray-700"
+              >
+                Roll
+              </label>
+              <input
+                type="text"
+                id="roll"
+                name="roll"
+                className="mt-4 mb-4 ml-4 block w-[300px] border-gray-300 rounded-xs shadow-sm  placeholder:font-login text-[24px] sm:text-sm shadow-black focus:ring-darkgray focus:border-darkgray"
+                placeholder="Your answer"
+                value={roll}
+                onChange={(e) => setRoll(e.target.value)}
+              />
+              <div className="bg-darkgray h-4 w-full "></div>
+            </div>
           </div>
+
           <div className="mt-4">
             <button
               type="button"
               onClick={handleSubmit}
-              className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+              className="inline-flex mt-4 justify-center px-[65px] py-[10px] text-[18px] font-extrabold font-forget text-white bg-darkgray rounded-md hover:bg-white hover:text-darkgray focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:border-2"
             >
               Submit
             </button>
           </div>
+
           {lotNumber && (
             <div className="mt-4">
               <p className="text-gray-700">Generated Lot Number: {lotNumber}</p>

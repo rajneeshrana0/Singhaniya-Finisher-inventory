@@ -86,8 +86,7 @@ function Login() {
       .catch((error) => {
         console.error("Login error:", error.message);
         toast.error("Wrong credentials, Try again.");
-      });
-      
+      }); 
   };
 
   
@@ -103,26 +102,26 @@ function Login() {
       <ToastContainer />
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen  items-center place-items-center">
         <div className="flex justify-center">
-          <img src={require("../assets/signup.jpg")} alt="" />
+          <img src={require("../assets/Logo1.png")} alt="" />
         </div>
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
           <div>
-            <img
+            {/* <img
               className="mx-auto h-12 w-auto"
-              src={require("../assets/logo.png")}
+              src={require("../assets/")}
               alt="Your Company"
-            />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Signin to your account
+            /> */}
+            <h2 className="mt-6 mb-[54px] text-center text-[33px] font-bold tracking-tight text-login font-heading">
+              Login to your Account
             </h2>
             
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {/* <input type="hidden" name="remember" defaultValue="true" /> */}
             <div className="-space-y-px rounded-md shadow-sm">
-              <div>
+              <div className="text-gray3 text-[14px] font-login font-semibold">
+                Email
                 <label htmlFor="email-address" className="sr-only">
-                  Email address
                 </label>
                 <input
                   id="email-address"
@@ -130,15 +129,15 @@ function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full rounded-t-md border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Email address"
+                  className="relative block w-full mt-[24px] mb-[24px] rounded-[3px] border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-lightMerchanta placeholder: text-[10px] placeholder:text-placeholder focus:z-10 focus:ring-2 focus:ring-inset focus:ring-lightMerchanta sm:text- sm:leading-6"
+                  placeholder="****************"
                   value={form.email}
                   onChange={handleInputChange}
                 />
               </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
+              <div className="text-gray3 text-[14px] font-login font-semibold">
+              Password
+              <label htmlFor="password" className="sr-only">
                 </label>
                 <input
                   id="password"
@@ -146,41 +145,40 @@ function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full rounded-b-md border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Password"
+                  className="relative block w-full rounded-[3px] border-0 py-1.5 px-1.5 ring-1 ring-inset ring-lightMerchanta placeholder: text-[10px] placeholder:text-placeholder focus:z-10 focus:ring-2 focus:ring-inset focus:ring-lightMerchanta sm:text-sm sm:leading-6"
+                  placeholder="****************"
                   value={form.password}
                   onChange={handleInputChange}
                 />
               </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+              <div className="flex items-center justify-between">
+              <div className="flex items-center mt-2">
                 <input
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  className="h-[12px] w-[12px] rounded border-gray-300 text-gray focus:ring-Merchanta"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="ml-2 block text-[12px] text-remember font-login"
                 >
-                  Remember me
+                  Remember Me
                 </label>
               </div>
 
-              <div className="text-sm">
-                <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot your password?
+              <div className="text-[12px] mt-2">
+                <span className="text-[12px] font-semibold text-gray font-forget">
+                  Forgot Password?
                 </span>
               </div>
+            </div>
             </div>
 
             <div>
               <button
                 type="submit"
-                className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="group relative flex w-full justify-center rounded-md bg-gray py-2 px-3 text-sm text-white hover:bg-white hover:text-darkgray  hover:border-2 hover:border-darkgray focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  focus-visible:outline-darkgray font-forget font-extrabold"
                 onClick={loginUser}
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -189,7 +187,7 @@ function Login() {
                     aria-hidden="true"
                   /> */}
                 </span>
-                Sign in
+                Login
               </button>
              
             </div>

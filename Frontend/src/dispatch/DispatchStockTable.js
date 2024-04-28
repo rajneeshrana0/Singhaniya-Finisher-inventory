@@ -5,16 +5,13 @@ function DispatchStockTable() {
   const [submittedData, setSubmittedData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); 
+  const [itemsPerPage] = useState(5);
 
   const fetchSubmittedData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:4000/api/store/all",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("http://localhost:4000/api/store/all", {
+        withCredentials: true,
+      });
       console.log(response);
       setSubmittedData(response.data);
     } catch (error) {
@@ -30,7 +27,6 @@ function DispatchStockTable() {
     dataItem.selectedOption.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -39,14 +35,31 @@ function DispatchStockTable() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full mt-6">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search by Party Name..."
-          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-        />
+      <div className="w-full mt-6 bg-white border-nav border-2 rounded-lg">
+        <div className="flex ml-4 mt-4 justify-between items-center ">
+          <div className="text-title font-bold">
+            Dispatch Stock OUT Table <br /> Total:7
+          </div>
+
+          <div className="flex items-center bg-backgrnd justify-center mr-6 h-[35px] overflow-hidden rounded-full">
+            <div>
+              <img
+                className="h-[24px] w-[24px] ml-5"
+                src={require("../assets/stockinSearch.png")}
+                alt="Inventory Management System"
+              />
+            </div>
+            <div className="h-[25px] ml-6 border-total border-[1px]"></div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by Party Name..."
+              className="mb-4 mt-3 w-[250px] bg-backgrnd h-5 placeholder:text-center border-none placeholder:font-login placeholder:text-[14px] placeholder:bg-backgrnd placeholder:text-total font-medium "
+            />
+          </div>
+        </div>
+
         {filteredData.length === 0 ? (
           <div className="text-center">
             <p
@@ -58,25 +71,25 @@ function DispatchStockTable() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
-              <thead className="bg-blue-800 text-white">
+            <table className="min-w-full divide-y mt-6 divide-gray-200 rounded-lg overflow-hidden">
+              <thead className="bg-header text-header-font  font-header ">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-[14px] uppercase">
                     Party Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-[14px] uppercase">
                     Challan Number
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-[14px] uppercase">
                     Quality
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-[14px] uppercase">
                     Lot Number
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-[14px] uppercase">
                     Kg
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium uppercase">
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-[14px] uppercase">
                     Meter
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase">
@@ -87,34 +100,34 @@ function DispatchStockTable() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-login font-header text-[16px] font-medium divide-gray-200">
                 {currentItems.map((dataItem, index) => (
                   <tr
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.selectedOption}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.challanNumber}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.quantity}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.lotNumber}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.kg}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.meter}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.roll}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-6 whitespace-nowrap">
                       {dataItem.karigar}
                     </td>
                   </tr>
@@ -132,7 +145,7 @@ function DispatchStockTable() {
               onClick={() => paginate(index + 1)}
               className={`px-3 py-1 mx-1 cursor-pointer ${
                 currentPage === index + 1
-                  ? "bg-blue-500 text-white"
+                  ? "bg-darkgray text-white hover:bg-white hover:text-darkgray hover:border-darkgray hover:border-2 rounded-md hover:rounded-md "
                   : "bg-gray-300"
               }`}
             >
