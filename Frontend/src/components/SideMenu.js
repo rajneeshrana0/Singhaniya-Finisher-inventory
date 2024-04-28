@@ -85,9 +85,9 @@ function SideMenu() {
   const userMenuItems = menuItems[userRole] || [];
 
   return (
-    <div className="h-screen w-[265px] mb-4 flex-col justify-between bg-nav hidden lg:flex shadow-md shadow-gray-600 font-login">
+    <div className="h-full p-4 w-[265px] mb-4 flex-col justify-between bg-nav hidden lg:flex shadow-md shadow-gray-600 font-login">
     
-      <div>
+      <div className="pt-4">
         <nav aria-label="Main Nav" className="flex flex-col space-y-1">
           {userMenuItems.map((menuItem, index) => (
             <Link

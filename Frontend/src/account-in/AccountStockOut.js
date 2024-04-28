@@ -69,7 +69,7 @@ function AccountStockOut() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by Party Name..."
-                className="mb-4 mt-3 w-[250px] bg-backgrnd h-5 placeholder:text-center border-none placeholder:font-login placeholder:text-[14px] placeholder:bg-backgrnd placeholder:text-total font-medium"
+                className="mb-4 mt-3 w-[250px] bg-backgrnd placeholder:text-center border border-none placeholder:font-login placeholder:text-[14px] placeholder:bg-backgrnd placeholder:text-total font-medium"
               />
             </div>
           </div>
@@ -125,7 +125,7 @@ function AccountStockOut() {
                       </td>
                       <td className="px-6 py-6 whitespace-nowrap">
                         <button
-                          className="bg-darkgray hover:bg-white text-white hover:text-darkgray hover:border-darkgray hover:border-2 font-semibold px-4 py-2 rounded-md transition-all duration-300"
+                          className="bg-darkgray hover:bg-white text-white hover:text-darkgray hover:border-darkgray outline hover:outline-2 font-semibold px-4 py-2 rounded-md"
                           onClick={() => handleAddButtonClick(dataItem)}
                         >
                           Add
@@ -146,7 +146,7 @@ function AccountStockOut() {
                 onClick={() => paginate(index + 1)}
                 className={`px-3 py-1 mx-1 cursor-pointer ${
                   currentPage === index + 1
-                    ? "bg-darkgray text-white hover:bg-white hover:text-darkgray hover:border-darkgray hover:border-2 rounded-md hover:rounded-md "
+                    ? "bg-darkgray text-white hover:bg-white hover:text-darkgray hover:border-darkgray outline hover:outline-2 rounded-md hover:rounded-md "
                     : "bg-gray-300 "
                 }`}
               >

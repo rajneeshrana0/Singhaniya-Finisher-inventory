@@ -10,7 +10,7 @@ function Layout() {
         <Header />
       </div>
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/6">
+        <div className="lg:w-1/6 h-screen">
           <SideMenu />
         </div>
         <div className="lg:w-5/6 p-4 bg-white">
