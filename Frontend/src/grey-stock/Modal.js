@@ -9,6 +9,8 @@ function Modal({ isOpen, onClose, data }) {
   const [selectedQualities, setSelectedQualities] = useState([]);
   const [qualityOptions, setQualityOptions] = useState([
     { value: "Option 1", label: "Option 1" },
+    { value: "Option 1", label: "Option 1" },
+    { value: "Option 1", label: "Option 1" },
     { value: "Option 2", label: "Option 2" },
     // Add more quality options here
   ]);
@@ -86,15 +88,15 @@ function Modal({ isOpen, onClose, data }) {
             <div className="mt-6 bg-gray-200 rounded-lg p-6">
               <div className="text-gray-700 font-semibold mb-4">
                 <span className="text-gray-900 mr-2">Selected Option:</span>
-                <span className="text-indigo-600">{data.selectedOption}</span>
+                <span className="text-white">{data.selectedOption}</span>
               </div>
               <div className="text-gray-700 font-semibold mb-4">
                 <span className="text-gray-900 mr-2">Challan Number:</span>
-                <span className="text-indigo-600">{data.challanNumber}</span>
+                <span className="text-white">{data.challanNumber}</span>
               </div>
               <div className="text-gray-700 font-semibold">
                 <span className="text-gray-900 mr-2">Quality:</span>
-                <span className="text-indigo-600">{data.quality}</span>
+                <span className="text-white">{data.quality}</span>
               </div>
               <div className="mt-4">
                 {selectedQualities.map((quality, index) => (

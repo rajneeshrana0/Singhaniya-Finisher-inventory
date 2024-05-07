@@ -14,16 +14,24 @@ const Dropdown = () => {
   const [quantity, setQuantity] = useState("");
   const [kg, setKg] = useState("");
   const [meter, setMeter] = useState("");
-  const [roll, setRoll] = useState("");
   const [lotNumber, setLotNumber] = useState("");
+  const [roll, setRoll] = useState("");
+ 
 
   const options = ["Rajneesh Rana", "Liza Ahuja", "Nitish Kumar"];
+
+  const liza =["Nike" ,"Addidas", "airmesh"];
+  
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
+    setIsOpen(false);
+  };
+  const handleOptionClicks = (liza) => {
+    setSelectedOption(liza);
     setIsOpen(false);
   };
 
@@ -78,31 +86,46 @@ const Dropdown = () => {
     <>
       <ToastContainer />
       <div className="flex flex-col items-center overflow-hidden">
-        <h1 className="text-[64px] font-medium font-login text-center text-white shadow-lg bg-gray rounded-md p-6  transition-transform duration-300 w-[1370px] h-[117px]">
-          Account Stock In
-        </h1>
         <div className="form-data-start w-full max-w-md mt-6">
-          <div className="relative inline-block text-left w-full mb-4">
-            <div>
-              <button
-                type="button"
-                className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-50"
-                onClick={toggleDropdown}
-              >
-                <span className="text-lg font-bold">Party Name</span>
-                <ChevronDownIcon
-                  className="ml-2 -mr-1 h-5 w-5"
-                  aria-hidden="true"
-                />
-              </button>
+          <div className="border-login border-[1px] rounded-xl overflow-hidden">
+            <div className="mt-4 ml-4 h-24 font-login text-2xl font-semibold">
+              Account Stock IN
             </div>
+            <div className="bg-darkgray h-4 w-full overflow-hidden"></div>
+          </div>
+
+          <div className="relative inline-block text-left w-full mt-8 border-login border-[1px] rounded-xl h-[155px] ">
+            <div className=" ">
+              <div className=" ml-4 flex items-center  gap-4  text-center mt-4 text-xl font-login">
+                Party Name
+                <button
+                  type="button"
+                  onClick={toggleDropdown}
+                  className="cursor-pointer"
+                >
+                  <ChevronDownIcon
+                    className="  mt-2 ml-2 -mr-4 h-6 w-6 border-2  "
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
+            </div>
+
+            {/* Display selected option */}
+            {selectedOption && (
+              <div className=" mt-3 text-center">
+                <p className=" flex flex-col text-gray-700">
+                  Selected Party Name: {selectedOption}
+                </p>
+              </div>
+            )}
             <Transition appear show={isOpen} as={Fragment}>
               <Dialog
                 as="div"
                 className="fixed inset-0 z-50 overflow-y-auto"
                 onClose={() => setIsOpen(false)}
               >
-                <div className="min-h-screen px-4 text-center">
+                <div className="min-h-screen m-auto ml-[230px] px-4 text-center">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -137,7 +160,7 @@ const Dropdown = () => {
                         <div className="relative">
                           <input
                             type="text"
-                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-darkgray focus:border-darkgray sm:text-sm"
                             placeholder="Search..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -167,17 +190,10 @@ const Dropdown = () => {
               </Dialog>
             </Transition>
           </div>
-          {/* Display selected option */}
-          {selectedOption && (
-            <div className="mt-4 text-center">
-              <p className="text-gray-700">
-                Selected Party Name: {selectedOption}
-              </p>
-            </div>
-          )}
+
           {/* Input Fields */}
-          <div className="border-login border-[1px] rounded-xl overflow-hidden">
-            <div className="mt-4 ">
+          <div className="border-login border-[1px] rounded-xl overflow-hidden mt-8">
+            <div className="mt-4 h-24">
               <label
                 htmlFor="challanNumber"
                 className="block text-gray-700 ml-4 font-login text-lg"
@@ -193,7 +209,6 @@ const Dropdown = () => {
                 value={challanNumber}
                 onChange={(e) => setChallanNumber(e.target.value)}
               />
-              <div className="bg-darkgray h-4 w-full overflow-hidden"></div>
             </div>
           </div>
 
@@ -205,16 +220,23 @@ const Dropdown = () => {
               >
                 Quality
               </label>
-              <input
-                type="text"
-                id="quantity"
-                name="quantity"
-                className="mt-4 block mb-4 ml-4 w-[300px] rounded-xs shadow-black shadow-sm border-gray-300 rounded-xs focus:ring-darkgray focus:border-darkgray sm:text-sm placeholder:font-login text-[24px]"
-                placeholder="Your answer"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-              <div className="bg-darkgray h-4 w-full "></div>
+              <div className="flex">
+                <input
+                  type="text"
+                  id="quantity"
+                  name="quantity"
+                  className="mt-4 block mb-4 ml-4 w-[300px] rounded-xs shadow-black shadow-sm border-gray-300 rounded-xs focus:ring-darkgray focus:border-darkgray sm:text-sm placeholder:font-login text-[24px]"
+                  placeholder="Your answer"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+                <ChevronDownIcon
+                  className=" cursor-pointer ml-2 mt-4 h-5 w-5 "
+                  aria-hidden="true"
+                  onClick={toggleDropdown}
+                />
+               
+              </div>
             </div>
           </div>
 
@@ -235,7 +257,6 @@ const Dropdown = () => {
                 value={kg}
                 onChange={(e) => setKg(e.target.value)}
               />
-              <div className="bg-darkgray h-4 w-full"></div>
             </div>
           </div>
 
@@ -256,7 +277,6 @@ const Dropdown = () => {
                 value={meter}
                 onChange={(e) => setMeter(e.target.value)}
               />
-              <div className="bg-darkgray h-4 w-full "></div>
             </div>
           </div>
 
@@ -277,7 +297,6 @@ const Dropdown = () => {
                 value={roll}
                 onChange={(e) => setRoll(e.target.value)}
               />
-              <div className="bg-darkgray h-4 w-full "></div>
             </div>
           </div>
 

@@ -40,42 +40,44 @@ function SideMenu() {
       { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
       { to: "/dispatch-stock", label: " Dispatch Stock In", icon: require("../assets//aso.jpeg") },
       { to: "/dispatch-data", label: " Dispatch Stock Table", icon: require("../assets//aso.jpeg") },
-      
+
     ],
     Heat: [
       { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
       { to: "/heat-issue", label: "Heatset Issue", icon: require("../assets//aso.jpeg") },
       { to: "/heat-issue-table", label: "Heatset Issue Table", icon: require("../assets//aso.jpeg") },
-     
+
     ],
     Process: [
       { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
       { to: "/processing-issue", label: " Processing Issue", icon: require("../assets//aso.jpeg") },
-      { to: "/process-issue-table", label: " Processing Issue Table", icon: require("../assets//aso.jpeg") },
-     
+      { to: "/processing-issue-table", label: " Processing Issue Table", icon: require("../assets//aso.jpeg") },
+
     ],
     Finish: [
       { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
       { to: "/finish-issue", label: "Finish Issue", icon: require("../assets/aso.jpeg") },
-      { to: "/admin/settings", label: "Finish Issue Table", icon: require("../assets//aso.jpeg") },
-    
+      { to: "finish-issue-table", label: "Finish Issue Table", icon: require("../assets//aso.jpeg") },
+
     ],
     Grey: [
       { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
       { to: "/grey-stock", label: "Grey Stock IN ", icon: require("../assets//aso.jpeg") },
       { to: "/grey-table", label: " Grey Table", icon: require("../assets//aso.jpeg") },
-   
+
     ],
-    
+
     Admin: [
       { to: "dashboard-account", label: "Dashboard", icon: require("../assets/dis.jpeg") },
       { to: "/acc-stock-in-data", label: "Account Stock IN", icon: require("../assets//aso.jpeg") },
       { to: "/grey-data", label: "Grey Data", icon: require("../assets//aso.jpeg") },
       { to: "/heat-data", label: "Heat Data", icon: require("../assets//aso.jpeg") },
       { to: "/finish-data", label: " Finish Data", icon: require("../assets//aso.jpeg") },
-      { to: "/dispatch-datat", label: "Dispatch Data ", icon: require("../assets//aso.jpeg") },
+      { to: "/dispatch-data", label: "Dispatch Data ", icon: require("../assets//aso.jpeg") },
       { to: "/acc-stock-out-data", label: "Account Stock Out Table", icon: require("../assets//aso.jpeg") },
-
+      { to: "/add-user", label: "Add User", icon: require("../assets//aso.jpeg") },
+      { to: "/add-party", label: "Add Party", icon: require("../assets//aso.jpeg") },
+      { to: "/add-quality", label: "Add Quality", icon: require("../assets//aso.jpeg") },
     ],
 
     // Define menu items for other roles as needed
@@ -85,18 +87,18 @@ function SideMenu() {
   const userMenuItems = menuItems[userRole] || [];
 
   return (
-    <div className="h-full p-4 w-[265px] mb-4 flex-col justify-between bg-nav hidden lg:flex shadow-md shadow-gray-600 font-login">
-    
+    <div className="h-full w-[265px] flex-col justify-between bg-nav hidden lg:flex shadow-md shadow-gray-600 font-login">
+
       <div className="pt-4">
         <nav aria-label="Main Nav" className="flex flex-col space-y-1">
           {userMenuItems.map((menuItem, index) => (
             <Link
               key={index}
               to={menuItem.to}
-              className="flex items-center gap-2 rounded-lg hover:bg-login hover:text-white px-4 py-2"
+              className="flex items-center gap-2 rounded-lg hover:bg-login hover:text-white px-3 py-2"
             >
               <img alt={menuItem.label} src={menuItem.icon}
-              className="flex items-center gap-2 " />
+                className="flex items-center gap-2 " />
               <span className="text-[16px] font-medium hover:bg-login hover:text-white font-login">{menuItem.label}</span>
             </Link>
           ))}

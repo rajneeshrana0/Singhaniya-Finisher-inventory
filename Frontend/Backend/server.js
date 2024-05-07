@@ -12,6 +12,8 @@ const Product = require("./models/Product");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
+const partyRoutes = require('./router/partyRoutes');
+const qualityRouter = require('./router/qualityRouter');
 // Initialize express app
 const app = express();
 const PORT = 4000;
@@ -137,6 +139,13 @@ app.get("/testget", async (req, res) => {
   const result = await Product.findOne({ _id: '6429979b2e5434138eda1564' });
   res.json(result);
 });
+
+// Quality Endpoint
+app.use('/api/qualities', qualityRouter);
+
+// Party Endpoint
+app.use('/api/parties', partyRoutes);
+
 
 // Start the server
 app.listen(PORT, () => {

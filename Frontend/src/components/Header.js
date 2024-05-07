@@ -57,13 +57,13 @@ export default function Header() {
               <div className="ml-[10px]">
                 <div className=" flex items-center justify-between ">
                   <Link to="/dashboard-account">
-                    <div className="flex gap-4">
+                    <div className="flex gap-2">
                       <img
                         className="h-[41px] w-[40px]"
                         src={require("../assets/Slogo2.png")}
                         alt="Inventory Management System"
                       />
-                      <p className="items-center mt-3">SINGHANIA FINISHERS</p>
+                      <p className="items-center mt-2">SINGHANIA FINISHERS</p>
                     
                     </div>
                   </Link>

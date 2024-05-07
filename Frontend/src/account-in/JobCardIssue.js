@@ -58,7 +58,7 @@ function JobCardIssue() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search Party Name..."
-              className="mb-4 mt-3 w-[250px] bg-backgrnd h-5 placeholder:text-center border-none placeholder:font-login placeholder:text-[14px] placeholder:bg-backgrnd placeholder:text-total font-medium "
+              className="mb-4 mt-3 w-[250px] bg-backgrnd placeholder:text-center border border-none placeholder:font-login placeholder:text-[14px] placeholder:bg-backgrnd placeholder:text-total font-medium "
             />
           </div>
         </div>

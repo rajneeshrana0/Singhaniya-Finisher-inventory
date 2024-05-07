@@ -106,11 +106,6 @@ function Login() {
         </div>
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
           <div>
-            {/* <img
-              className="mx-auto h-12 w-auto"
-              src={require("../assets/")}
-              alt="Your Company"
-            /> */}
             <h2 className="mt-6 mb-[54px] text-center text-[33px] font-bold tracking-tight text-login font-heading">
               Login to your Account
             </h2>
@@ -129,8 +124,8 @@ function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full mt-[24px] mb-[24px] rounded-[3px] border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-lightMerchanta placeholder: text-[10px] placeholder:text-placeholder focus:z-10 focus:ring-2 focus:ring-inset focus:ring-lightMerchanta sm:text- sm:leading-6"
-                  placeholder="****************"
+                  className="relative block w-full mt-[24px] mb-[24px] rounded-[3px] border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-lightMerchanta placeholder: text-[16px] placeholder:text-placeholder focus:z-10 focus:ring-2 focus:ring-inset focus:ring-lightMerchanta sm:text- sm:leading-6"
+                  placeholder="Enter Your Email"
                   value={form.email}
                   onChange={handleInputChange}
                 />
@@ -145,14 +140,14 @@ function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full rounded-[3px] border-0 py-1.5 px-1.5 ring-1 ring-inset ring-lightMerchanta placeholder: text-[10px] placeholder:text-placeholder focus:z-10 focus:ring-2 focus:ring-inset focus:ring-lightMerchanta sm:text-sm sm:leading-6"
-                  placeholder="****************"
+                  className="relative block w-full rounded-[3px] border-0 py-1.5 px-1.5 ring-1 ring-inset ring-lightMerchanta placeholder:text-[16px] placeholder:text-placeholder focus:z-10 focus:ring-2 focus:ring-inset focus:ring-lightMerchanta sm:text-sm sm:leading-6"
+                  placeholder="Enter Your Password"
                   value={form.password}
                   onChange={handleInputChange}
                 />
               </div>
               <div className="flex items-center justify-between">
-              <div className="flex items-center mt-2">
+              <div className="flex items-center mt-4">
                 <input
                   id="remember-me"
                   name="remember-me"
@@ -161,14 +156,14 @@ function Login() {
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-[12px] text-remember font-login"
+                  className="ml-2 block text-[16px] text-remember font-login"
                 >
                   Remember Me
                 </label>
               </div>
 
-              <div className="text-[12px] mt-2">
-                <span className="text-[12px] font-semibold text-gray font-forget">
+              <div className="text-[12px] mt-4">
+                <span className="text-[16px] shadow-sm shadow-login font-semibold text-gray font-forget">
                   Forgot Password?
                 </span>
               </div>
@@ -178,7 +173,7 @@ function Login() {
             <div>
               <button
                 type="submit"
-                className="group relative flex w-full justify-center rounded-md bg-gray py-2 px-3 text-sm text-white hover:bg-white hover:text-darkgray  hover:border-2 hover:border-darkgray focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  focus-visible:outline-darkgray font-forget font-extrabold"
+                className="group relative flex w-full justify-center rounded-md bg-gray py-2 px-3 text-sm text-white hover:bg-white hover:text-darkgray outline hover:outline-2 hover:border-darkgray focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  focus-visible:outline-darkgray font-forget font-extrabold"
                 onClick={loginUser}
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
