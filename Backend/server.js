@@ -28,7 +28,7 @@ app.use(express.json());
 
 // CORS setup
 const corsOptions = {
-  origin: 'https://main.d3or753byysvnk.amplifyapp.com/', // Replace with your frontend origin
+  origin: 'http://localhost:3000/', // Replace with your frontend origin
   credentials: true, // Allow cookies to be sent with the request
 };
 app.use(cors(corsOptions));
